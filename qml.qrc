@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>RangeImporter.qml</file>
+        <file>MainScreen.qml</file>
     </qresource>
 </RCC>

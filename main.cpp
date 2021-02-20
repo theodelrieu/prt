@@ -3,7 +3,6 @@
 #include <QQmlContext>
 
 #include <rangeloader.hpp>
-#include <treemodeladaptor.h>
 #include <treeviewmodel.hpp>
 
 int main(int argc, char *argv[])

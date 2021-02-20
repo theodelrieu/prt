@@ -1,20 +1,29 @@
-import QtQuick 2.5
-import QtQuick.Window 2.5
+import QtQuick 2.15
 import QtQuick.Controls 1.4
-import Qt.labs.platform 1.1
 
-Window {
+ApplicationWindow {
     id: window
     width: 640
     height: 480
     visible: true
     title: "Poker range trainer"
 
+    Loader {
+        id: pageLoader
+        anchors.fill: parent
+        source: "RangeImporter.qml"
+    }
+
     Connections {
         target: _rangeLoader
-        function onParseStarted() { console.log("received parse started signal") }
-        function onParseEnded(success) { console.log("received parse ended signal", success); }
+        function onParseEnded(success) {
+            if (success)
+                pageLoader.source = "MainScreen.qml"
+        }
+
     }
+
+    /*
 
     TreeView {
         id: treeView
@@ -31,27 +40,5 @@ Window {
             }
         }
     }
-
-    FileDialog {
-        id: equilabDialog
-        defaultSuffix: "hr"
-        nameFilters: ["Equilab range files (*.hr)"]
-        options: FileDialog.ReadOnly
-        onAccepted: {
-            console.log("chosen file:", equilabDialog.file)
-            _rangeLoader.parseEquilab(equilabDialog.file)
-        }
-    }
-
-
-    Button {
-        anchors.centerIn: parent
-        height: parent.height / 4
-        width: parent.width / 4
-        onClicked: equilabDialog.open()
-        Text {
-            text: "Import Equilab ranges"
-            anchors.centerIn: parent
-        }
-    }
+    */
 }

@@ -1,8 +1,9 @@
 #ifndef RANGELOADER_HPP
 #define RANGELOADER_HPP
 
-#include <QObject>
-#include <QString>
+#include <QtCore/QObject>
+#include <QtCore/QString>
+#include <QtCore/QFutureWatcher>
 
 #include <prc/folder.hpp>
 #include "treeviewmodel.hpp"
@@ -20,7 +21,13 @@ signals:
     void parseStarted();
     void parseEnded(bool success);
 
+private slots:
+    void handleFinished();
+    void handleCanceled();
+
 private:
+    QFutureWatcher<prc::folder> _watcher;
+    prc::folder _root;
     TreeViewModel* _tree;
 };
 
