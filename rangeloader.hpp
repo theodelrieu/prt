@@ -5,13 +5,13 @@
 #include <QString>
 
 #include <prc/folder.hpp>
-#include "treemodel.hpp"
+#include "treeviewmodel.hpp"
 
 class RangeLoader : public QObject
 {
     Q_OBJECT
 public:
-    explicit RangeLoader(TreeModel* tree, QObject *parent = nullptr);
+    explicit RangeLoader(TreeViewModel* tree, QObject *parent = nullptr);
 
 public slots:
     void parseEquilab(QString const& fullpath);
@@ -21,7 +21,7 @@ signals:
     void parseEnded(bool success);
 
 private:
-    TreeModel* _tree;
+    TreeViewModel* _tree;
 };
 
 #endif // RANGELOADER_HPP

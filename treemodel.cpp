@@ -59,7 +59,10 @@ int TreeModel::rowCount(QModelIndex const &parent) const
     else
         parentItem = static_cast<TreeItem*>(parent.internalPointer());
 
-    return parentItem->childCount();
+
+    auto count =  parentItem->childCount();
+    std::cout << "nbChildren = " << count << std::endl;
+    return count;
 }
 
 int TreeModel::columnCount(QModelIndex const &parent) const
@@ -67,7 +70,9 @@ int TreeModel::columnCount(QModelIndex const &parent) const
     std::cout << "columnCount called" << std::endl;
     if (parent.isValid())
         return static_cast<TreeItem*>(parent.internalPointer())->columnCount();
-    return _rootItem->columnCount();
+    auto count =  _rootItem->columnCount();
+    std::cout << "columnCount = " << count << std::endl;
+    return count;
 }
 
 QVariant TreeModel::data(QModelIndex const &index, int role) const
@@ -106,14 +111,13 @@ QVariant TreeModel::headerData(int section, Qt::Orientation orientation,
 void TreeModel::setRoot(const prc::folder &f) {
     std::cout << "setRoot called" << std::endl;
     std::cout << "root has " << f.entries().size() << "entries" << std::endl;
-    emit beginResetModel();
+    beginResetModel();
     std::cout << "after beginresetmodel" << std::endl;
     auto newRoot = new TreeItem(QString("root"), nullptr);
     auto sub = new TreeItem(QString("new item"), newRoot);
     newRoot->appendChild(sub);
     delete _rootItem;
     _rootItem = newRoot;
-    //_rootItem->appendChild(sub);
-    emit endResetModel();
+    endResetModel();
     std::cout << "after resetmodel" << std::endl;
 }

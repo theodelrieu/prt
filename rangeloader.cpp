@@ -12,7 +12,7 @@
 
 namespace fs = std::filesystem;
 
-RangeLoader::RangeLoader(TreeModel* tree, QObject *parent) : QObject(parent), _tree(tree)
+RangeLoader::RangeLoader(TreeViewModel* tree, QObject *parent) : QObject(parent), _tree(tree)
 {
 }
 
@@ -20,7 +20,8 @@ void RangeLoader::parseEquilab(QString const &url)
 {
     auto const fullpath = QUrl(url).toLocalFile();
     emit parseStarted();
-    QtConcurrent::run(prc::equilab::parse, fs::path{fullpath.toStdString()}).then([this](prc::folder const& f){
+    QtConcurrent::run([](){});
+    /*QtConcurrent::run(prc::equilab::parse, fs::path{fullpath.toStdString()}).then([this](prc::folder const& f){
         std::cout << "before invoke" << std::endl;
         QMetaObject::invokeMethod(_tree, "setRoot", Qt::BlockingQueuedConnection, Q_ARG(prc::folder, f));
         std::cout << "after invoke" << std::endl;
@@ -33,5 +34,5 @@ void RangeLoader::parseEquilab(QString const &url)
         emit parseEnded(false);})
             .onCanceled([this]{
         std::cerr << "parseEquilab canceled"<< std::endl;
-        emit parseEnded(false);});
+        emit parseEnded(false);});*/
 }

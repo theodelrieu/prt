@@ -1,6 +1,6 @@
-import QtQuick 6
-import QtQuick.Window 6
-import QtQuick.Controls 6
+import QtQuick 2.5
+import QtQuick.Window 2.5
+import QtQuick.Controls 1.4
 import Qt.labs.platform 1.1
 
 Window {
@@ -20,6 +20,7 @@ Window {
         id: treeView
         TableViewColumn {
             title: "Title"
+            role: "display"
             width: 200
         }
         model: _rangeTreeModel

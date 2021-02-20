@@ -24,16 +24,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick Concurrent REQUIRED)
+find_package(QT NAMES Qt5 COMPONENTS Core Quick Concurrent REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick Concurrent REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
         rangeloader.cpp
         qml.qrc
-        treemodeladaptor.cpp
-        treeitem.cpp
-        treemodel.cpp
+        treeviewmodel.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

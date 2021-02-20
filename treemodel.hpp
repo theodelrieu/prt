@@ -1,7 +1,7 @@
 #ifndef TREEMODEL_HPP
 #define TREEMODEL_HPP
 
-#include <QAbstractItemModel>
+#include <QStandardItem>
 #include <QObject>
 
 #include "treeitem.hpp"

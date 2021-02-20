@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.14.0, 2021-02-10T00:57:55. -->
+<!-- Written by QtCreator 4.14.0, 2021-02-12T22:59:58. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -88,8 +88,8 @@
   <variable>ProjectExplorer.Project.Target.0</variable>
   <valuemap type="QVariantMap">
    <value type="QString" key="DeviceType">Desktop</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Desktop Qt 6.0.0 MSVC2019 64bit</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Desktop Qt 6.0.0 MSVC2019 64bit</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Replacement for &quot;Desktop Qt 6.0.0 MSVC2019 64bit&quot;</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Replacement for &quot;Desktop Qt 6.0.0 MSVC2019 64bit&quot;</value>
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">qt.qt6.600.win64_msvc2019_64_kit</value>
    <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
@@ -496,8 +496,8 @@
   <variable>ProjectExplorer.Project.Target.1</variable>
   <valuemap type="QVariantMap">
    <value type="QString" key="DeviceType">Android.Device.Type</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Android Qt 6.0.0 Clang arm64-v8a</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Android Qt 6.0.0 Clang arm64-v8a</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Replacement for &quot;Android Qt 6.0.0 Clang arm64-v8a&quot;</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Replacement for &quot;Android Qt 6.0.0 Clang arm64-v8a&quot;</value>
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{99ccd924-3c63-49a0-a5ae-a9f85aaf9c45}</value>
    <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
@@ -826,8 +826,8 @@
   <variable>ProjectExplorer.Project.Target.2</variable>
   <valuemap type="QVariantMap">
    <value type="QString" key="DeviceType">Android.Device.Type</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Android Qt 6.0.0 Clang armeabi-v7a</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Android Qt 6.0.0 Clang armeabi-v7a</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Replacement for &quot;Android Qt 6.0.0 Clang armeabi-v7a&quot;</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Replacement for &quot;Android Qt 6.0.0 Clang armeabi-v7a&quot;</value>
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{54d129bb-b6be-4d6f-a45b-2eb5a9844029}</value>
    <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>

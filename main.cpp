@@ -4,7 +4,7 @@
 
 #include <rangeloader.hpp>
 #include <treemodeladaptor.h>
-#include <treemodel.hpp>
+#include <treeviewmodel.hpp>
 
 int main(int argc, char *argv[])
 {
@@ -14,12 +14,11 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-    auto tree = new TreeModel;
+    auto tree = new TreeViewModel;
     auto loader = new RangeLoader(tree);
 
-    qmlRegisterUncreatableType<TreeModel>("RangeTreeModel", 1, 0, "TreeModel", "");
+    qmlRegisterUncreatableType<TreeViewModel>("RangeTreeModel", 1, 0, "TreeViewModel", "");
     qmlRegisterUncreatableType<RangeLoader>("RangeLoader", 1, 0, "RangeLoader", "");
-    qmlRegisterType<TreeModelAdaptor>("TreeModelAdaptor", 1, 0, "TreeModelAdaptor");
     engine.rootContext()->setContextProperty("_rangeTreeModel", tree);
     engine.rootContext()->setContextProperty("_rangeLoader", loader);
     const QUrl url(QStringLiteral("qrc:/main.qml"));
