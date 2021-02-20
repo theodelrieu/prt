@@ -1,9 +1,20 @@
 import QtQuick 2.0
+import QtQuick.Controls 1.4 as C1
 
-Item {
-    Rectangle {
-        height: 200
-        width: 200
-        color: "red"
+Rectangle {
+    C1.TreeView {
+        id: treeView
+        C1.TableViewColumn {
+            title: "Ranges"
+            role: "display"
+            width: 180
+        }
+        model: _rangeTreeModel
+        itemDelegate: Item {
+            Text {
+                anchors.verticalCenter: parent.VerticalCenter
+                text: styleData.value
+            }
+        }
     }
 }

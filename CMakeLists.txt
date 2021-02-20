@@ -32,6 +32,7 @@ set(PROJECT_SOURCES
         rangeloader.cpp
         qml.qrc
         treeviewmodel.cpp
+        range.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

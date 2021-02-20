@@ -1,5 +1,5 @@
 import QtQuick 2.15
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.15
 
 ApplicationWindow {
     id: window
@@ -22,23 +22,4 @@ ApplicationWindow {
         }
 
     }
-
-    /*
-
-    TreeView {
-        id: treeView
-        TableViewColumn {
-            title: "Title"
-            role: "display"
-            width: 200
-        }
-        model: _rangeTreeModel
-        itemDelegate: Item {
-            Text {
-                anchors.verticalCenter: parent.VerticalCenter
-                text: styleData.value
-            }
-        }
-    }
-    */
 }

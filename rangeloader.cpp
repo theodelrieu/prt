@@ -24,29 +24,13 @@ void RangeLoader::parseEquilab(QString const &url)
     auto fut = QtConcurrent::run(prc::equilab::parse, fullpath);
     _watcher.setFuture(std::move(fut));
     emit parseStarted();
-    /*QFutureWatcher<prc::folder> watcher;
-    connect(&watcher, &decltype(watcher)::finished, this, &RangeLoader::)*/
-            /*
-        std::cout << "before invoke" << std::endl;
-        QMetaObject::invokeMethod(_tree, "setRoot", Qt::BlockingQueuedConnection, Q_ARG(prc::folder, f));
-        std::cout << "after invoke" << std::endl;
-        emit parseEnded(true);})
-    .onFailed([this](std::exception const& e){
-        std::cerr << "parseEquilab failed with " << e.what() << std::endl;
-        emit parseEnded(false);})
-    .onFailed([this]{
-        std::cerr << "parseEquilab failed"<< std::endl;
-        emit parseEnded(false);})
-            .onCanceled([this]{
-        std::cerr << "parseEquilab canceled"<< std::endl;
-        emit parseEnded(false);});
-        */
 }
 
 void RangeLoader::handleFinished()
 {
     try {
         _root = _watcher.result();
+        _tree->setRoot(_root);
         emit parseEnded(true);
     }  catch (std::exception const& e) {
         std::cerr << "parseEquilab failed"<< std::endl;
