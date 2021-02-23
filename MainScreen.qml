@@ -16,5 +16,11 @@ Rectangle {
                 text: styleData.value
             }
         }
+        onDoubleClicked: function (idx) {
+            if (treeView.isExpanded(idx))
+                treeView.collapse(idx)
+            else
+                treeView.expand(idx)
+        }
     }
 }
