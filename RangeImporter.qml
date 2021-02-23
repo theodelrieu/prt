@@ -5,12 +5,14 @@ import QtQuick.Controls 2.15
 Item {
     implicitHeight: 640
     implicitWidth: 400
+    height: window.height
+    width: window.width
     FileDialog {
         id: equilabDialog
+        folder: shortcuts.documents
         defaultSuffix: "hr"
         nameFilters: ["Equilab range files (*.hr)"]
         onAccepted: {
-            console.log("chosen file:", equilabDialog.fileUrl)
             _rangeLoader.parseEquilab(equilabDialog.fileUrl)
         }
     }
@@ -18,12 +20,10 @@ Item {
     Connections {
         target: _rangeLoader
         function onParseStarted() {
-            console.log("received parse started signal")
             equilabButton.enabled = false
             equilabButton.highlighted = true
         }
         function onParseEnded(success) {
-            console.log("received parse ended signal", success)
             equilabButton.enabled = true
             equilabButton.highlighted = false
         }

@@ -1,0 +1,36 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index dd74307..260d689 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,14 +1,14 @@
+ cmake_minimum_required(VERSION 3.3)
+ project(prc)
+ 
+-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
++include(${CMAKE_CURRENT_LIST_DIR}/build/conanbuildinfo.cmake)
+ conan_basic_setup(TARGETS)
+ 
+ set(CMAKE_CXX_STANDARD 17)
+ set(CMAKE_CXX_EXTENSIONS OFF)
+ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+ 
+-include(CTest)
++#include(CTest)
+ 
+ add_subdirectory(lib)
+-add_subdirectory(app)
++#add_subdirectory(app)
+diff --git a/lib/CMakeLists.txt b/lib/CMakeLists.txt
+index dbb8dc2..52b6736 100644
+--- a/lib/CMakeLists.txt
++++ b/lib/CMakeLists.txt
+@@ -33,6 +33,6 @@ target_compile_definitions(libprc PUBLIC BOOST_SPIRIT_X3_UNICODE)
+ 
+ target_link_libraries(libprc CONAN_PKG::boost CONAN_PKG::icu) 
+ 
+-if (BUILD_TESTING)
+-  add_subdirectory(test)
+-endif()
++# if (BUILD_TESTING)
++#   add_subdirectory(test)
++# endif()

@@ -33,6 +33,9 @@ set(PROJECT_SOURCES
         qml.qrc
         treeviewmodel.cpp
         range.cpp
+        rangedisplayer.cpp
+        handinfo.cpp
+        rangeinfo.hpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
