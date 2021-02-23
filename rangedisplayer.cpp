@@ -6,18 +6,30 @@
 RangeDisplayer::RangeDisplayer(TreeViewModel* treeView, QObject *parent) : QStandardItemModel(parent), _treeView(treeView), _handInfo(emptyHandInfo())
 {
     auto root = invisibleRootItem();
-    for (auto const& elem : _handInfo)
+    for (auto const& elem : qAsConst(_handInfo))
         root->appendRow(new HandInfo(elem));
 }
 
 QVariant RangeDisplayer::data(const QModelIndex &idx, int role) const
 {
-    if (!idx.isValid() || role != Qt::DisplayRole)
+    if (!idx.isValid())
+        return {};
+    if (role < NameRole || role > SubrangesRoles)
         return {};
     auto item = itemFromIndex(idx);
     if (!item)
         return {};
-    return item->text();
+    if (role == NameRole)
+        return item->text();
+    return {};
+}
+
+QHash<int, QByteArray> RangeDisplayer::roleNames() const
+{
+    QHash<int, QByteArray> names;
+    names[NameRole] = "name";
+    names[SubrangesRoles] = "subranges";
+    return names;
 }
 
 void RangeDisplayer::setRange(QModelIndex const& idx)

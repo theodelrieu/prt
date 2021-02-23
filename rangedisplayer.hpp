@@ -12,9 +12,15 @@ class RangeDisplayer : public QStandardItemModel
 {
     Q_OBJECT
 public:
+    enum Roles {
+      NameRole = Qt::UserRole + 1,
+      SubrangesRoles,
+    };
+
     explicit RangeDisplayer(TreeViewModel* treeView, QObject *parent = nullptr);
 
     QVariant data(QModelIndex const&, int role) const override;
+    QHash<int, QByteArray> roleNames() const override;
 
 public slots:
     void setRange(QModelIndex const&);

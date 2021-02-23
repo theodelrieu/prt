@@ -31,6 +31,5 @@ QVector<HandInfo> Range::toHandInfo() const
             it->appendRange(RangeInfo{"Parent", QColor::fromRgb(0x949FE8), w});
         }
     }
-    //auto hands = prc::expand_hands()
     return ret;
 }

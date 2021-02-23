@@ -51,30 +51,29 @@ Rectangle {
 
         Rectangle {
             id: gridRect
-            width: parent.width * 0.8
+            width: parent.width * 0.8 > parent.height ? parent.height : parent.width * 0.8
             height: width
             anchors { top: parent.top; left: parent.left }
-            color: "gray"
+            color: "white"
 
-            GridLayout {
-                id: gridLayout
+            GridView {
+                id: gridView
+                interactive: false
                 anchors.fill: parent
-                columnSpacing: 2
-                rowSpacing: 2
-                columns: 13
-                rows: 13
+                cellHeight: parent.height / 13
+                cellWidth: cellHeight
 
-                Repeater {
-                    model: _rangeDisplayer
-                    Rectangle {
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
-                        color: "blue"
-                        Text {
-                            anchors.centerIn: parent
-                            text: model.display
-                            fontSizeMode: Text.Fit
-                        }
+                model: _rangeDisplayer
+                delegate: Rectangle {
+                    implicitHeight: 30
+                    implicitWidth: 30
+                    height: gridView.cellHeight - gridView.cellHeight * 0.1
+                    width: gridView.cellWidth - gridView.cellWidth * 0.1
+                    color: "lightgray"
+                    Text {
+                        anchors.centerIn: parent
+                        text: model.name
+                        fontSizeMode: Text.Fit
                     }
                 }
             }
