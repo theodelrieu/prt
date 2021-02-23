@@ -1,15 +1,7 @@
 #include "handinfo.hpp"
 
-HandInfo::HandInfo(const QString &name, const QVector<RangeInfo> &ranges): _name(name), _ranges(ranges)
+HandInfo::HandInfo(QString const &name, QVector<RangeInfo> const& ranges): _name(name), _ranges(ranges)
 {
-}
-
-QVariant HandInfo::data(int role) const
-{
-    // TODO custom roles
-    if (role != Qt::DisplayRole)
-        return QVariant();
-    return _name;
 }
 
 QString const& HandInfo::name() const
@@ -17,7 +9,7 @@ QString const& HandInfo::name() const
    return _name;
 }
 
-void HandInfo::appendRange(RangeInfo const& info)
+void HandInfo::appendRange(RangeInfo info)
 {
     _ranges.append(info);
 }

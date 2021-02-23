@@ -28,8 +28,9 @@ QVector<HandInfo> Range::toHandInfo() const
             if (it == ret.end())
                 throw std::runtime_error("should not happen: invalid hand " + n);
             // TODO fix parent range color
-            it->appendRange(RangeInfo{"Parent", QColor::fromRgb(0x949FE8), w});
+            //it->ranges.append(RangeInfo{"Parent", QColor::fromRgb(0x949FE8), w});
         }
     }
+    //auto hands = prc::expand_hands()
     return ret;
 }

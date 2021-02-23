@@ -35,7 +35,7 @@ set(PROJECT_SOURCES
         range.cpp
         rangedisplayer.cpp
         handinfo.cpp
-        rangeinfo.hpp
+        rangeinfo.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

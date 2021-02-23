@@ -70,6 +70,10 @@ Rectangle {
                     height: gridView.cellHeight - gridView.cellHeight * 0.1
                     width: gridView.cellWidth - gridView.cellWidth * 0.1
                     color: "lightgray"
+                    Column {
+
+                    }
+
                     Text {
                         anchors.centerIn: parent
                         text: model.name

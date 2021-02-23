@@ -19,9 +19,9 @@ QVariant RangeDisplayer::data(const QModelIndex &idx, int role) const
     auto item = itemFromIndex(idx);
     if (!item)
         return {};
+    auto info = static_cast<HandInfo*>(item);
     if (role == NameRole)
-        return item->text();
-    return {};
+        return info->name();
 }
 
 QHash<int, QByteArray> RangeDisplayer::roleNames() const

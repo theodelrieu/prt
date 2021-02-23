@@ -13,9 +13,8 @@ class HandInfo : public QStandardItem
 public:
     HandInfo(QString const& name, QVector<RangeInfo> const& ranges);
 
-    QVariant data(int role) const override;
     QString const& name() const;
-    void appendRange(RangeInfo const&);
+    void appendRange(RangeInfo);
 
 private:
     QString _name;
