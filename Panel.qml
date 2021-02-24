@@ -8,6 +8,9 @@ Rectangle {
 
     property alias absWeightButton: absWeightButton
     property alias baseRangeButton: baseRangeButton
+    property Item currentGridItem
+    property var baseRange: currentGridItem && currentGridItem.baseRange
+    property var subranges: currentGridItem && currentGridItem.subs
 
     ColumnLayout {
         id: weightsLayout
@@ -41,8 +44,60 @@ Rectangle {
             text: "Subranges"
         }
     }
+
     Rectangle {
         anchors { top: rangeKindLayout.bottom; bottom: panelRect.bottom; right: panelRect.right; left: panelRect.left }
         color: "purple"
+        visible: baseRange && baseRange.name !== ""
+
+        Loader {
+            id: handInfoLoader
+            sourceComponent: visible ? (baseRangeButton.checked ? baseRangeComp : subrangesComp) : null
+        }
+    }
+
+    Item {
+        Component {
+            id: baseRangeComp
+            Row {
+                Text {
+                    text: currentGridItem.handText
+                }
+                Rectangle {
+                    implicitHeight: 30
+                    implicitWidth: 30
+                    width: panelRect.width / 8
+                    height: width
+                    color: baseRange.color
+                }
+                Text {
+                    text: baseRange.weight + "%"
+                }
+            }
+        }
+
+        Component {
+            id: subrangesComp
+            Column {
+                Text {
+                    text: currentGridItem.handText
+                }
+                Repeater {
+                    model: subranges
+                    Row {
+                        Rectangle {
+                            implicitHeight: 30
+                            implicitWidth: 30
+                            width: panelRect.width / 8
+                            height: width
+                            color: modelData.color
+                        }
+                        Text {
+                            text: modelData.name + ": " + modelData.weight * (absWeightButton.checked ? baseRange.weight / 100 : 1) + "%"
+                        }
+                    }
+                }
+            }
+        }
     }
 }

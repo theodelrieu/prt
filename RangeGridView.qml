@@ -23,6 +23,7 @@ GridView {
         property var baseRange: parentRange
         property int gridIndex: index
         property double deselectedOpacity: 1.0
+        property alias handText: handText.text
 
         color: "#f5eeee"
         opacity: GridView.isCurrentItem ? 0.2 : deselectedOpacity

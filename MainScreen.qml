@@ -38,6 +38,7 @@ Rectangle {
         }
         Panel {
             id: panel
+            currentGridItem: gridView.currentItem
             anchors { top: parent.top; bottom: parent.bottom; left: gridRect.right; right: parent.right }
         }
     }
