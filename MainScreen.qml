@@ -51,7 +51,7 @@ Rectangle {
 
         Rectangle {
             id: gridRect
-            width: parent.width * 0.8 > parent.height ? parent.height : parent.width * 0.8
+            width: Math.min(parent.width * 0.8, parent.height)
             height: width
             anchors { top: parent.top; left: parent.left }
             color: "white"
@@ -67,12 +67,9 @@ Rectangle {
                 delegate: Rectangle {
                     implicitHeight: 30
                     implicitWidth: 30
-                    height: gridView.cellHeight - gridView.cellHeight * 0.1
-                    width: gridView.cellWidth - gridView.cellWidth * 0.1
+                    height: gridView.cellHeight * 0.9
+                    width: gridView.cellWidth * 0.9
                     color: "lightgray"
-                    Column {
-
-                    }
 
                     Text {
                         anchors.centerIn: parent
