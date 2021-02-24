@@ -15,33 +15,8 @@ Rectangle {
         width: content.width / 4
         color: "black"
 
-        C1.TreeView {
+        RangeTreeView {
             id: treeView
-            model: _rangeTreeModel
-            anchors.fill: parent
-
-            C1.TableViewColumn {
-                title: "Ranges"
-                role: "display"
-            }
-
-            itemDelegate: Item {
-                Text {
-                    anchors.verticalCenter: parent.VerticalCenter
-                    text: styleData.value
-                }
-            }
-
-            onActivated: function (idx) {
-                if (treeView.isExpanded(idx))
-                    treeView.collapse(idx)
-                else
-                    treeView.expand(idx)
-            }
-
-            onCurrentIndexChanged: function () {
-                _rangeDisplayer.setRange(treeView.currentIndex)
-            }
         }
     }
 
@@ -57,115 +32,13 @@ Rectangle {
             anchors { top: parent.top; left: parent.left }
             color: "white"
 
-            GridView {
+            RangeGridView {
                 id: gridView
-                interactive: false
-                currentIndex: -1
-                anchors.fill: parent
-                cellHeight: parent.height / 13
-                cellWidth: cellHeight
-
-                model: _rangeDisplayer
-                delegate: Rectangle {
-                    id: cell
-                    implicitHeight: 30
-                    implicitWidth: 30
-                    height: gridView.cellHeight * 0.9
-                    width: gridView.cellWidth * 0.9
-
-                    property var subs: subranges
-                    property var baseRange: parentRange
-                    property int gridIndex: index
-                    property double deselectedOpacity: 1.0
-
-                    color: "#f5eeee"
-                    opacity: GridView.isCurrentItem ? 0.2 : deselectedOpacity
-
-                    Item {
-                        id: rangeInfoItem
-                        Component {
-                            id: baseRangeComp
-                            Rectangle {
-                                width: cell.width
-                                height: cell.height * (baseRange.weight / 100)
-                                color: baseRange.color
-                            }
-                        }
-
-                        Component {
-                            id: subrangesComp
-                            Column {
-                                Repeater {
-                                    model: subs
-                                    Rectangle {
-                                        property double baseWeight: baseRange.weight / 100
-                                        width: cell.width
-                                        height: cell.height * (modelData.weight / 100) * (absWeightButton.checked ? baseWeight : 1)
-                                        color: modelData.color
-                                    }
-                                }
-                            }
-                        }
-
-                        Loader {
-                            id: rangeInfoLoader
-                            sourceComponent: baseRangeButton.checked ? baseRangeComp : subrangesComp
-                        }
-                    }
-
-                    Text {
-                        id: handText
-                        anchors.centerIn: parent
-                        text: model.name
-                        fontSizeMode: Text.Fit
-                    }
-
-                    CellMouseArea {}
-                }
             }
         }
-
-        Rectangle {
-            id: panelRect
+        Panel {
+            id: panel
             anchors { top: parent.top; bottom: parent.bottom; left: gridRect.right; right: parent.right }
-            color: "yellow"
-
-            ColumnLayout {
-                id: weightsLayout
-                Text {
-                    text: "Weights"
-                    font.underline: true
-                }
-
-                RadioButton {
-                    id: absWeightButton
-                    checked: true
-                    text: "Absolute"
-                }
-                RadioButton {
-                    text: "Relative"
-                }
-            }
-            ColumnLayout{
-                id: rangeKindLayout
-                anchors.top: weightsLayout.bottom
-                Text {
-                    text: "Range kind"
-                    font.underline: true
-                }
-                RadioButton {
-                    id: baseRangeButton
-                    checked: true
-                    text: "Base range"
-                }
-                RadioButton {
-                    text: "Subranges"
-                }
-            }
-            Rectangle {
-                anchors { top: rangeKindLayout.bottom; bottom: panelRect.bottom; right: panelRect.right; left: panelRect.left }
-                color: "purple"
-            }
         }
     }
 }

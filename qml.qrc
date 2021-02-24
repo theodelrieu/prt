@@ -4,5 +4,8 @@
         <file>RangeImporter.qml</file>
         <file>MainScreen.qml</file>
         <file>CellMouseArea.qml</file>
+        <file>Panel.qml</file>
+        <file>RangeGridView.qml</file>
+        <file>RangeTreeView.qml</file>
     </qresource>
 </RCC>
