@@ -13,10 +13,8 @@ int Range::type() const
     return QStandardItem::ItemType::UserType;
 }
 
-QVector<HandInfo> Range::toHandInfo() const
+QList<HandInfo> Range::parentRangeInfo() const
 {
-    // TODO find a way to show parent/subranges differently
-    // TODO subranges
     auto ret = emptyHandInfo();
     for (auto const& [w, e] : _range.elems())
     {
@@ -28,9 +26,14 @@ QVector<HandInfo> Range::toHandInfo() const
             if (it == ret.end())
                 throw std::runtime_error("should not happen: invalid hand " + n);
             // TODO fix parent range color
-            //it->ranges.append(RangeInfo{"Parent", QColor::fromRgb(0x949FE8), w});
+            it->appendRange(RangeInfo{"Parent", QColor::fromRgb(0x949FE8), w});
         }
     }
-    //auto hands = prc::expand_hands()
     return ret;
+}
+
+QList<HandInfo> Range::subrangesInfo() const
+{
+    // TODO
+    return {};
 }

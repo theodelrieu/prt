@@ -2,7 +2,7 @@
 #define RANGEDISPLAYER_HPP
 
 #include <QObject>
-#include <QVector>
+#include <QList>
 #include <QStandardItemModel>
 
 #include "handinfo.hpp"
@@ -14,7 +14,7 @@ class RangeDisplayer : public QStandardItemModel
 public:
     enum Roles {
       NameRole = Qt::UserRole + 1,
-      SubrangesRoles,
+      ParentRangeRole,
     };
 
     explicit RangeDisplayer(TreeViewModel* treeView, QObject *parent = nullptr);
@@ -28,7 +28,7 @@ public slots:
 private:
     TreeViewModel* _treeView;
     QModelIndex _lastIndex;
-    QVector<HandInfo> _handInfo;
+    QList<HandInfo> _handInfo;
 };
 
 #endif // RANGEDISPLAYER_HPP

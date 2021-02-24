@@ -1,6 +1,6 @@
 #include "handinfo.hpp"
 
-HandInfo::HandInfo(QString const &name, QVector<RangeInfo> const& ranges): _name(name), _ranges(ranges)
+HandInfo::HandInfo(QString const &name, QList<RangeInfo> const& ranges): _name(name), _ranges(ranges)
 {
 }
 
@@ -9,14 +9,19 @@ QString const& HandInfo::name() const
    return _name;
 }
 
+QList<RangeInfo> const& HandInfo::ranges() const
+{
+    return _ranges;
+}
+
 void HandInfo::appendRange(RangeInfo info)
 {
     _ranges.append(info);
 }
 
-QVector<HandInfo> emptyHandInfo()
+QList<HandInfo> emptyHandInfo()
 {
-    static QVector<HandInfo> ret{
+    static QList<HandInfo> ret{
         {"AA", {}},  {"AKs", {}}, {"AQs", {}}, {"AJs", {}}, {"ATs", {}}, {"A9s", {}}, {"A8s", {}}, {"A7s", {}}, {"A6s", {}}, {"A5s", {}}, {"A4s", {}}, {"A3s", {}}, {"A2s", {}},
         {"AKo", {}}, {"KK", {}} , {"KQs", {}}, {"KJs", {}}, {"KTs", {}}, {"K9s", {}}, {"K8s", {}}, {"K7s", {}}, {"K6s", {}}, {"K5s", {}}, {"K4s", {}}, {"K3s", {}}, {"K2s", {}},
         {"AQo", {}}, {"KQo", {}}, {"QQ", {}} , {"QJs", {}}, {"QTs", {}}, {"Q9s", {}}, {"Q8s", {}}, {"Q7s", {}}, {"Q6s", {}}, {"Q5s", {}}, {"Q4s", {}}, {"Q3s", {}}, {"Q2s", {}},

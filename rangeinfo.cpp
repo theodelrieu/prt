@@ -1,7 +1,7 @@
 #include "rangeinfo.hpp"
 
 RangeInfo::RangeInfo(QString const& name, QColor color, double weight):
-    QStandardItem(), _name(name), _color(color), _weight(weight)
+    _name(name), _color(color), _weight(weight)
 {
 }
 

@@ -2,7 +2,7 @@
 #define HANDINFO_HPP
 
 #include <QtCore/QString>
-#include <QtCore/QVector>
+#include <QtCore/QList>
 #include <QtCore/QVariant>
 #include <QStandardItem>
 
@@ -11,16 +11,18 @@
 class HandInfo : public QStandardItem
 {
 public:
-    HandInfo(QString const& name, QVector<RangeInfo> const& ranges);
+    HandInfo(QString const& name, QList<RangeInfo> const& ranges);
 
     QString const& name() const;
+    QList<RangeInfo> const& ranges() const;
+
     void appendRange(RangeInfo);
 
 private:
     QString _name;
-    QVector<RangeInfo> _ranges;
+    QList<RangeInfo> _ranges;
 };
 
-QVector<HandInfo> emptyHandInfo();
+QList<HandInfo> emptyHandInfo();
 
 #endif // HANDINFO_HPP

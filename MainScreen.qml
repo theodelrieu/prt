@@ -65,11 +65,29 @@ Rectangle {
 
                 model: _rangeDisplayer
                 delegate: Rectangle {
+                    id: cell
                     implicitHeight: 30
                     implicitWidth: 30
                     height: gridView.cellHeight * 0.9
                     width: gridView.cellWidth * 0.9
                     color: "lightgray"
+
+                    Item {
+                        id: rangeInfoItem
+                        Component {
+                            id: parentRangeComp
+                            Rectangle {
+                                width: cell.width
+                                height: cell.height * (model.parentRange.weight / 100)
+                                color: model.parentRange.color
+                            }
+                        }
+
+                        Loader {
+                            id: rangeInfoLoader
+                            sourceComponent: parentRangeComp
+                        }
+                    }
 
                     Text {
                         anchors.centerIn: parent

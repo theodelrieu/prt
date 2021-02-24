@@ -2,12 +2,17 @@
 #define RANGEINFO_HPP
 
 #include <QtCore/QString>
-#include <QStandardItem>
+#include <QObject>
 #include <QColor>
 
-class RangeInfo : public QStandardItem
+class RangeInfo
 {
+    Q_GADGET
+    Q_PROPERTY(QString name READ name)
+    Q_PROPERTY(QColor color READ color)
+    Q_PROPERTY(double weight READ weight)
 public:
+    RangeInfo() = default;
     RangeInfo(QString const& name, QColor color, double weight);
 
     QString const& name() const;
@@ -19,5 +24,7 @@ private:
     QColor _color;
     double _weight;
 };
+
+Q_DECLARE_METATYPE(RangeInfo)
 
 #endif // RANGEINFO_HPP

@@ -16,7 +16,8 @@ public:
 
     int type() const override;
     // Post-condition: result is sorted by index (AA > A2s > AKo > 22)
-    QVector<HandInfo> toHandInfo() const;
+    QList<HandInfo> parentRangeInfo() const;
+    QList<HandInfo> subrangesInfo() const;
 
 private:
     prc::range _range;
