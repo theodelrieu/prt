@@ -32,15 +32,15 @@ Rectangle {
                 }
             }
 
-            onClicked: function (idx) {
-                _rangeDisplayer.setRange(idx)
-            }
-
-            onDoubleClicked: function (idx) {
+            onActivated: function (idx) {
                 if (treeView.isExpanded(idx))
                     treeView.collapse(idx)
                 else
                     treeView.expand(idx)
+            }
+
+            onCurrentIndexChanged: function () {
+                _rangeDisplayer.setRange(treeView.currentIndex)
             }
         }
     }
@@ -79,6 +79,15 @@ Rectangle {
                     Item {
                         id: rangeInfoItem
                         Component {
+                            id: baseRangeComp
+                            Rectangle {
+                                width: cell.width
+                                height: cell.height * (baseRange.weight / 100)
+                                color: baseRange.color
+                            }
+                        }
+
+                        Component {
                             id: subrangesComp
                             Column {
                                 Repeater {
@@ -95,7 +104,7 @@ Rectangle {
 
                         Loader {
                             id: rangeInfoLoader
-                            sourceComponent: subrangesComp
+                            sourceComponent: baseRangeButton.checked ? baseRangeComp : subrangesComp
 
                         }
                     }
@@ -115,6 +124,7 @@ Rectangle {
             color: "yellow"
 
             ColumnLayout {
+                id: weightsLayout
                 Text {
                     text: "Weights"
                     font.underline: true
@@ -127,6 +137,22 @@ Rectangle {
                 }
                 RadioButton {
                     text: "Relative"
+                }
+            }
+            ColumnLayout{
+                id: rangeKindLayout
+                anchors.top: weightsLayout.bottom
+                Text {
+                    text: "Range kind"
+                    font.underline: true
+                }
+                RadioButton {
+                    id: baseRangeButton
+                    checked: true
+                    text: "Base range"
+                }
+                RadioButton {
+                    text: "Subranges"
                 }
             }
         }
