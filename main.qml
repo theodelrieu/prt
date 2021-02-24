@@ -4,10 +4,10 @@ import QtQuick.Window 2.15
 
 Window {
     id: window
-    minimumHeight: 480
-    minimumWidth: 640
-    width: 640
-    height: 480
+    minimumWidth: 1000
+    minimumHeight: 600
+    width: 1000
+    height: 600
     visible: true
     title: "Poker range trainer"
 

@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 1.4 as C1
+import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.5
 
 Rectangle {
@@ -73,26 +74,19 @@ Rectangle {
                     color: "lightgray"
 
                     property var subs: subranges
+                    property var baseRange: parentRange
 
                     Item {
                         id: rangeInfoItem
-                        Component {
-                            id: parentRangeComp
-                            Rectangle {
-                                width: cell.width
-                                height: cell.height * (parentRange.weight / 100)
-                                color: parentRange.color
-                            }
-                        }
-
                         Component {
                             id: subrangesComp
                             Column {
                                 Repeater {
                                     model: subs
                                     Rectangle {
+                                        property double baseWeight: baseRange.weight / 100
                                         width: cell.width
-                                        height: cell.height * (modelData.weight / 100)
+                                        height: cell.height * (modelData.weight / 100) * (absWeightButton.checked ? baseWeight : 1)
                                         color: modelData.color
                                     }
                                 }
@@ -114,6 +108,28 @@ Rectangle {
                 }
             }
         }
-    }
 
+        Rectangle {
+            id: panelRect
+            anchors { top: parent.top; bottom: parent.bottom; left: gridRect.right; right: parent.right }
+            color: "yellow"
+
+            ColumnLayout {
+                Text {
+                    text: "Weights"
+                    font.underline: true
+                }
+
+                RadioButton {
+                    id: absWeightButton
+                    checked: true
+                    text: "Absolute"
+                }
+                RadioButton {
+                    text: "Relative"
+                }
+            }
+        }
+    }
 }
+
