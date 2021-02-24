@@ -15,9 +15,7 @@ public:
     Range(prc::range const& range, QObject* parent = nullptr);
 
     int type() const override;
-    // Post-condition: result is sorted by index (AA > A2s > AKo > 22)
-    QList<HandInfo> parentRangeInfo() const;
-    QList<HandInfo> subrangesInfo() const;
+    QList<HandInfo> toHandInfo() const;
 
 private:
     prc::range _range;

@@ -11,16 +11,19 @@
 class HandInfo : public QStandardItem
 {
 public:
-    HandInfo(QString const& name, QList<RangeInfo> const& ranges);
+    HandInfo(QString const& name, RangeInfo const& parentRange, QList<RangeInfo> const& subranges = {});
 
     QString const& name() const;
-    QList<RangeInfo> const& ranges() const;
+    RangeInfo const& parentRange() const;
+    QList<RangeInfo> const& subranges() const;
 
-    void appendRange(RangeInfo);
+    void setParentRange(RangeInfo const&);
+    void appendSubrange(RangeInfo const&);
 
 private:
     QString _name;
-    QList<RangeInfo> _ranges;
+    RangeInfo _parentRange;
+    QList<RangeInfo> _subranges;
 };
 
 QList<HandInfo> emptyHandInfo();

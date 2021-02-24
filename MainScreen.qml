@@ -72,20 +72,37 @@ Rectangle {
                     width: gridView.cellWidth * 0.9
                     color: "lightgray"
 
+                    property var subs: subranges
+
                     Item {
                         id: rangeInfoItem
                         Component {
                             id: parentRangeComp
                             Rectangle {
                                 width: cell.width
-                                height: cell.height * (model.parentRange.weight / 100)
-                                color: model.parentRange.color
+                                height: cell.height * (parentRange.weight / 100)
+                                color: parentRange.color
+                            }
+                        }
+
+                        Component {
+                            id: subrangesComp
+                            Column {
+                                Repeater {
+                                    model: subs
+                                    Rectangle {
+                                        width: cell.width
+                                        height: cell.height * (modelData.weight / 100)
+                                        color: modelData.color
+                                    }
+                                }
                             }
                         }
 
                         Loader {
                             id: rangeInfoLoader
-                            sourceComponent: parentRangeComp
+                            sourceComponent: subrangesComp
+
                         }
                     }
 

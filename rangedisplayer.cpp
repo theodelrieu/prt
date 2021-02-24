@@ -14,7 +14,7 @@ QVariant RangeDisplayer::data(const QModelIndex &idx, int role) const
 {
     if (!idx.isValid())
         return {};
-    if (role < NameRole || role > ParentRangeRole)
+    if (role < NameRole || role >= LastRole)
         return {};
     auto item = itemFromIndex(idx);
     if (!item)
@@ -25,12 +25,9 @@ QVariant RangeDisplayer::data(const QModelIndex &idx, int role) const
     case NameRole:
         return info->name();
     case ParentRangeRole:
-    {
-        auto const& ranges = info->ranges();
-        if (ranges.empty())
-            return QVariant::fromValue(RangeInfo{});
-        return QVariant::fromValue(ranges.front());
-    }
+        return QVariant::fromValue(info->parentRange());
+    case SubrangesRole:
+        return QVariant::fromValue(info->subranges());
     default:
         return {};
     }
@@ -41,6 +38,7 @@ QHash<int, QByteArray> RangeDisplayer::roleNames() const
     QHash<int, QByteArray> names;
     names[NameRole] = "name";
     names[ParentRangeRole] = "parentRange";
+    names[SubrangesRole] = "subranges";
     return names;
 }
 
@@ -53,7 +51,7 @@ void RangeDisplayer::setRange(QModelIndex const& idx)
         return;
     auto range = static_cast<Range*>(item);
     _lastIndex = idx;
-    _handInfo = range->parentRangeInfo();
+    _handInfo = range->toHandInfo();
     beginResetModel();
     clear();
     auto root = invisibleRootItem();

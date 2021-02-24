@@ -1,6 +1,7 @@
 #include "handinfo.hpp"
 
-HandInfo::HandInfo(QString const &name, QList<RangeInfo> const& ranges): _name(name), _ranges(ranges)
+HandInfo::HandInfo(QString const &name, RangeInfo const& parentRange, QList<RangeInfo> const& subranges):
+    _name(name), _parentRange(parentRange), _subranges(subranges)
 {
 }
 
@@ -9,14 +10,24 @@ QString const& HandInfo::name() const
    return _name;
 }
 
-QList<RangeInfo> const& HandInfo::ranges() const
+QList<RangeInfo> const& HandInfo::subranges() const
 {
-    return _ranges;
+    return _subranges;
 }
 
-void HandInfo::appendRange(RangeInfo info)
+RangeInfo const& HandInfo::parentRange() const
 {
-    _ranges.append(info);
+    return _parentRange;
+}
+
+void HandInfo::setParentRange(RangeInfo const& info)
+{
+    _parentRange = info;
+}
+
+void HandInfo::appendSubrange(RangeInfo const& info)
+{
+    _subranges.append(info);
 }
 
 QList<HandInfo> emptyHandInfo()

@@ -15,6 +15,8 @@ public:
     enum Roles {
       NameRole = Qt::UserRole + 1,
       ParentRangeRole,
+      SubrangesRole,
+      LastRole,
     };
 
     explicit RangeDisplayer(TreeViewModel* treeView, QObject *parent = nullptr);
