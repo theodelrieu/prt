@@ -60,6 +60,7 @@ Rectangle {
             GridView {
                 id: gridView
                 interactive: false
+                currentIndex: -1
                 anchors.fill: parent
                 cellHeight: parent.height / 13
                 cellWidth: cellHeight
@@ -71,10 +72,14 @@ Rectangle {
                     implicitWidth: 30
                     height: gridView.cellHeight * 0.9
                     width: gridView.cellWidth * 0.9
-                    color: "#f5eeee"
 
                     property var subs: subranges
                     property var baseRange: parentRange
+                    property int gridIndex: index
+                    property double deselectedOpacity: 1.0
+
+                    color: "#f5eeee"
+                    opacity: GridView.isCurrentItem ? 0.2 : deselectedOpacity
 
                     Item {
                         id: rangeInfoItem
@@ -105,15 +110,17 @@ Rectangle {
                         Loader {
                             id: rangeInfoLoader
                             sourceComponent: baseRangeButton.checked ? baseRangeComp : subrangesComp
-
                         }
                     }
 
                     Text {
+                        id: handText
                         anchors.centerIn: parent
                         text: model.name
                         fontSizeMode: Text.Fit
                     }
+
+                    CellMouseArea {}
                 }
             }
         }
@@ -154,6 +161,10 @@ Rectangle {
                 RadioButton {
                     text: "Subranges"
                 }
+            }
+            Rectangle {
+                anchors { top: rangeKindLayout.bottom; bottom: panelRect.bottom; right: panelRect.right; left: panelRect.left }
+                color: "purple"
             }
         }
     }
