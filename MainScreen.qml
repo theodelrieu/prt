@@ -71,7 +71,7 @@ Rectangle {
                     implicitWidth: 30
                     height: gridView.cellHeight * 0.9
                     width: gridView.cellWidth * 0.9
-                    color: "lightgray"
+                    color: "#f5eeee"
 
                     property var subs: subranges
                     property var baseRange: parentRange

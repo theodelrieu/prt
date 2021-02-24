@@ -26,7 +26,7 @@ QList<HandInfo> Range::toHandInfo() const
             if (it == ret.end())
                 throw std::runtime_error("should not happen: invalid hand " + n);
             // TODO fix parent range color
-            it->setParentRange(RangeInfo{"Parent", QColor::fromRgb(0x949FE8), w});
+            it->setParentRange(RangeInfo{"Parent", QColor::fromRgb(0xa6a5a5), w});
         }
     }
 
