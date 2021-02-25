@@ -1,0 +1,5 @@
+cleanup quizer
+Do not embed RangeInfo into HandInfo? (latter never changes)
+Once Yes/No quiz works, show info (on quiz end only)
+
+Handle multiple-step quiz ?

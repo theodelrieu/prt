@@ -13,7 +13,7 @@ int Range::type() const
     return QStandardItem::ItemType::UserType;
 }
 
-QString const& Range::name() const
+QString Range::name() const
 {
     return QString::fromStdString(_range.name());
 }
@@ -50,5 +50,15 @@ QList<HandInfo> Range::toHandInfo() const
             }
         }
     }
+    return ret;
+}
+
+QList<RangeInfo> Range::subrangeInfo() const
+{
+    QList<RangeInfo> ret;
+
+    for (auto const& sub : _range.subranges())
+        ret.append(RangeInfo{QString::fromStdString(sub.name()), QColor::fromRgb(sub.rgb()), 0});
+
     return ret;
 }

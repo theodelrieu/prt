@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QColor>
 
+// TODO rename HandRangInfo
 class RangeInfo
 {
     Q_GADGET

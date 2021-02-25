@@ -8,6 +8,8 @@
 #include "handinfo.hpp"
 #include "treeviewmodel.hpp"
 
+class Range;
+
 class RangeDisplayer : public QStandardItemModel
 {
     Q_OBJECT
@@ -24,6 +26,9 @@ public:
     QVariant data(QModelIndex const&, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
 
+    QList<HandInfo> const& handInfo() const;
+    Range const* currentRange() const;
+
 signals:
     void rangeLoaded(QString const&);
 
@@ -32,8 +37,9 @@ public slots:
 
 private:
     TreeViewModel* _treeView;
-    QModelIndex _lastIndex;
+    QModelIndex _lastTreeIndex;
     QList<HandInfo> _handInfo;
+    Range* _currentRange;
 };
 
 #endif // RANGEDISPLAYER_HPP

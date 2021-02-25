@@ -92,12 +92,22 @@ GridView {
                 }
             }
         }
-        Connections {
-            target: GlobalState
-            function onModeChanged() {
-                if (GlobalState.mode === Mode.Quiz)
-                    gridView.currentIndex = -1
+    }
+
+    Connections {
+        target: GlobalState
+        function onModeChanged() {
+            if (GlobalState.mode === Mode.Quiz) {
+                gridView.currentIndex = -1
+                _quizer.start()
             }
+        }
+    }
+    Connections {
+        target: _quizer
+        function onNewQuiz(idx, info) {
+            gridView.currentIndex = idx
+            console.log("Is", gridView.currentItem.handText, "in the", info.name, "range?")
         }
     }
 }
