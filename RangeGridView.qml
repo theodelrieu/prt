@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 1.4 as C1
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.5
+import "."
 
 GridView {
     id: gridView
@@ -33,7 +34,7 @@ GridView {
             Component {
                 id: baseRangeComp
                 Rectangle {
-                    visible: !panel.quizButton.started
+                    visible: GlobalState.mode === Mode.View
                     width: cell.width
                     height: cell.height * (baseRange.weight / 100)
                     color: baseRange.color
@@ -46,8 +47,8 @@ GridView {
                     Repeater {
                         model: subs
                         Rectangle {
+                            visible: GlobalState.mode === Mode.View
                             property double baseWeight: baseRange.weight / 100
-                            visible: !panel.quizButton.started
                             width: cell.width
                             height: cell.height * (modelData.weight / 100) * (panel.absWeightButton.checked ? baseWeight : 1)
                             color: modelData.color

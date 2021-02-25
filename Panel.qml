@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.5
 import QtQuick.Controls 2.15
+import "."
 
 Rectangle {
     id: panelRect
@@ -8,7 +9,6 @@ Rectangle {
 
     property alias absWeightButton: absWeightButton
     property alias baseRangeButton: baseRangeButton
-    property alias quizButton: quizButton
     property Item currentGridItem
     property bool rangeLoaded: false
 
@@ -64,18 +64,16 @@ Rectangle {
             id: quizButton
             enabled: panelRect.rangeLoaded
             anchors.centerIn: parent
-            property bool started: false
             Text {
                 id: quizText
                 anchors.centerIn: parent
-                text: parent.started ? "Stop quiz" : "Start quiz"
+                text: GlobalState.mode === Mode.View ? "Start quiz" : "Stop quiz"
             }
             onClicked: function () {
-                started = !started
-                if (started)
-                    _quizer.start()
+                if (GlobalState.mode === Mode.View)
+                    GlobalState.mode = Mode.Quiz
                 else
-                    _quizer.stop()
+                    GlobalState.mode = Mode.View
             }
         }
     }

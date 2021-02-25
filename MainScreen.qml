@@ -2,18 +2,19 @@ import QtQuick 2.15
 import QtQuick.Controls 1.4 as C1
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.5
+import "."
 
 Rectangle {
-    id: content
+    id: mainScreen
     height: window.height
     width: window.width
     color: "red"
 
     Rectangle {
         id: treeRect
-        visible: !panel.quizButton.started
-        height: content.height
-        width: content.width / 4
+        visible: GlobalState.mode === Mode.View
+        height: parent.height
+        width: parent.width / 4
         color: "black"
 
         RangeTreeView {

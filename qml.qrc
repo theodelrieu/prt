@@ -3,9 +3,11 @@
         <file>main.qml</file>
         <file>RangeImporter.qml</file>
         <file>MainScreen.qml</file>
-        <file>CellMouseArea.qml</file>
         <file>Panel.qml</file>
         <file>RangeGridView.qml</file>
         <file>RangeTreeView.qml</file>
+        <file>GlobalState.qml</file>
+        <file>Mode.qml</file>
+        <file>qmldir</file>
     </qresource>
 </RCC>
