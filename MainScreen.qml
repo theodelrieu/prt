@@ -44,5 +44,12 @@ Rectangle {
             anchors { top: parent.top; bottom: parent.bottom; left: gridRect.right; right: parent.right }
         }
     }
+    Connections {
+        target: _rangeDisplayer
+        function onRangeLoaded() {
+            if (!GlobalState.rangeLoaded)
+                GlobalState.rangeLoaded = true
+        }
+    }
 }
 

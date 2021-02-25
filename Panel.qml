@@ -7,10 +7,8 @@ Rectangle {
     id: panelRect
     color: "yellow"
 
-    property alias absWeightButton: absWeightButton
-    property alias baseRangeButton: baseRangeButton
     property Item currentGridItem
-    property bool rangeLoaded: false
+    property bool __rangeLoaded: false
 
     ColumnLayout {
         id: weightsLayout
@@ -23,6 +21,12 @@ Rectangle {
             id: absWeightButton
             checked: true
             text: "Absolute"
+            onCheckedChanged: {
+                if (checked)
+                    GlobalState.weightType = WeightType.Absolute
+                else
+                    GlobalState.weightType = WeightType.Relative
+            }
         }
         RadioButton {
             text: "Relative"
@@ -39,6 +43,12 @@ Rectangle {
             id: baseRangeButton
             checked: true
             text: "Base range"
+            onCheckedChanged: {
+                if (checked)
+                    GlobalState.rangeType = RangeType.Base
+                else
+                    GlobalState.rangeType = RangeType.Subranges
+            }
         }
         RadioButton {
             text: "Subranges"
@@ -53,7 +63,7 @@ Rectangle {
 
         Loader {
             id: handInfoLoader
-            sourceComponent: (rangeLoaded && currentGridItem) ? (baseRangeButton.checked ? baseRangeComp : subrangesComp) : null
+            sourceComponent: (__rangeLoaded && currentGridItem) ? (baseRangeButton.checked ? baseRangeComp : subrangesComp) : null
         }
     }
 
@@ -62,7 +72,7 @@ Rectangle {
         color: "cyan"
         Button {
             id: quizButton
-            enabled: panelRect.rangeLoaded
+            enabled: panelRect.__rangeLoaded
             anchors.centerIn: parent
             Text {
                 id: quizText
@@ -81,7 +91,7 @@ Rectangle {
     Connections {
         target: _rangeDisplayer
         function onRangeLoaded(rangeName) {
-            panelRect.rangeLoaded = true
+            panelRect.__rangeLoaded = true
         }
     }
 

@@ -50,7 +50,7 @@ GridView {
                             visible: GlobalState.mode === Mode.View
                             property double baseWeight: baseRange.weight / 100
                             width: cell.width
-                            height: cell.height * (modelData.weight / 100) * (panel.absWeightButton.checked ? baseWeight : 1)
+                            height: cell.height * (modelData.weight / 100) * (GlobalState.weightType === WeightType.Absolute ? baseWeight : 1)
                             color: modelData.color
                         }
                     }
@@ -59,7 +59,7 @@ GridView {
 
             Loader {
                 id: rangeInfoLoader
-                sourceComponent: panel.baseRangeButton.checked ? baseRangeComp : subrangesComp
+                sourceComponent: (GlobalState.rangeType === RangeType.Base ? baseRangeComp : subrangesComp)
             }
         }
 
@@ -71,7 +71,7 @@ GridView {
         }
         MouseArea {
             id: cellMouseArea
-            enabled: false
+            enabled: GlobalState.rangeLoaded && GlobalState.mode === Mode.View
             anchors.fill: parent
             hoverEnabled: true
             onEntered: function () {
@@ -93,19 +93,10 @@ GridView {
             }
         }
         Connections {
-            target: _rangeDisplayer
-            function onRangeLoaded() {
-                cellMouseArea.enabled = true
-            }
-        }
-        Connections {
-            target: _quizer
-            function onQuizStarted() {
-                gridView.currentIndex = -1
-                cellMouseArea.enabled = false
-            }
-            function onQuizStopped() {
-                cellMouseArea.enabled = true
+            target: GlobalState
+            function onModeChanged() {
+                if (GlobalState.mode === Mode.Quiz)
+                    gridView.currentIndex = -1
             }
         }
     }

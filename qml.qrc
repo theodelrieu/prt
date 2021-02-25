@@ -9,5 +9,7 @@
         <file>GlobalState.qml</file>
         <file>Mode.qml</file>
         <file>qmldir</file>
+        <file>WeightType.qml</file>
+        <file>RangeType.qml</file>
     </qresource>
 </RCC>
