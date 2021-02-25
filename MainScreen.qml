@@ -11,6 +11,7 @@ Rectangle {
 
     Rectangle {
         id: treeRect
+        visible: !panel.quizButton.started
         height: content.height
         width: content.width / 4
         color: "black"

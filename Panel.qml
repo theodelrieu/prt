@@ -8,6 +8,7 @@ Rectangle {
 
     property alias absWeightButton: absWeightButton
     property alias baseRangeButton: baseRangeButton
+    property alias quizButton: quizButton
     property Item currentGridItem
     property bool rangeLoaded: false
 
@@ -71,6 +72,10 @@ Rectangle {
             }
             onClicked: function () {
                 started = !started
+                if (started)
+                    _quizer.start()
+                else
+                    _quizer.stop()
             }
         }
     }

@@ -5,6 +5,7 @@
 #include <rangeloader.hpp>
 #include <treeviewmodel.hpp>
 #include <rangedisplayer.hpp>
+#include <quizer.hpp>
 
 int main(int argc, char *argv[])
 {
@@ -17,13 +18,16 @@ int main(int argc, char *argv[])
     auto tree = new TreeViewModel;
     auto loader = new RangeLoader(tree);
     auto displayer = new RangeDisplayer(tree);
+    auto quizer = new Quizer;
 
     qmlRegisterUncreatableType<TreeViewModel>("RangeTreeModel", 1, 0, "TreeViewModel", "");
     qmlRegisterUncreatableType<RangeLoader>("RangeLoader", 1, 0, "RangeLoader", "");
     qmlRegisterUncreatableType<RangeDisplayer>("RangeDisplayer", 1, 0, "RangeDisplayer", "");
+    qmlRegisterUncreatableType<Quizer>("Quizer", 1, 0, "Quizer", "");
     engine.rootContext()->setContextProperty("_rangeTreeModel", tree);
     engine.rootContext()->setContextProperty("_rangeLoader", loader);
     engine.rootContext()->setContextProperty("_rangeDisplayer", displayer);
+    engine.rootContext()->setContextProperty("_quizer", quizer);
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {

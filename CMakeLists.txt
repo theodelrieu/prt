@@ -36,6 +36,7 @@ set(PROJECT_SOURCES
         rangedisplayer.cpp
         handinfo.cpp
         rangeinfo.cpp
+        quizer.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

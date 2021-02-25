@@ -33,6 +33,7 @@ GridView {
             Component {
                 id: baseRangeComp
                 Rectangle {
+                    visible: !panel.quizButton.started
                     width: cell.width
                     height: cell.height * (baseRange.weight / 100)
                     color: baseRange.color
@@ -46,6 +47,7 @@ GridView {
                         model: subs
                         Rectangle {
                             property double baseWeight: baseRange.weight / 100
+                            visible: !panel.quizButton.started
                             width: cell.width
                             height: cell.height * (modelData.weight / 100) * (panel.absWeightButton.checked ? baseWeight : 1)
                             color: modelData.color
@@ -92,7 +94,17 @@ GridView {
         Connections {
             target: _rangeDisplayer
             function onRangeLoaded() {
-                cellMouseArea.enabled = true;
+                cellMouseArea.enabled = true
+            }
+        }
+        Connections {
+            target: _quizer
+            function onQuizStarted() {
+                gridView.currentIndex = -1
+                cellMouseArea.enabled = false
+            }
+            function onQuizStopped() {
+                cellMouseArea.enabled = true
             }
         }
     }
