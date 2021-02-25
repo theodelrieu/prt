@@ -9,8 +9,7 @@ Rectangle {
     property alias absWeightButton: absWeightButton
     property alias baseRangeButton: baseRangeButton
     property Item currentGridItem
-    property var baseRange: currentGridItem && currentGridItem.baseRange
-    property var subranges: currentGridItem && currentGridItem.subs
+    property bool rangeLoaded: false
 
     ColumnLayout {
         id: weightsLayout
@@ -46,13 +45,40 @@ Rectangle {
     }
 
     Rectangle {
-        anchors { top: rangeKindLayout.bottom; bottom: panelRect.bottom; right: panelRect.right; left: panelRect.left }
+        id: handInfoRect
+        height: (panelRect.height - rangeKindLayout.height) / 2
+        anchors { top: rangeKindLayout.bottom; right: panelRect.right; left: panelRect.left }
         color: "purple"
-        visible: baseRange && baseRange.name !== ""
 
         Loader {
             id: handInfoLoader
-            sourceComponent: visible ? (baseRangeButton.checked ? baseRangeComp : subrangesComp) : null
+            sourceComponent: (rangeLoaded && currentGridItem) ? (baseRangeButton.checked ? baseRangeComp : subrangesComp) : null
+        }
+    }
+
+    Rectangle {
+        anchors { bottom: panelRect.bottom; right: panelRect.right; left: panelRect.left; top: handInfoRect.bottom }
+        color: "cyan"
+        Button {
+            id: quizButton
+            enabled: panelRect.rangeLoaded
+            anchors.centerIn: parent
+            property bool started: false
+            Text {
+                id: quizText
+                anchors.centerIn: parent
+                text: parent.started ? "Stop quiz" : "Start quiz"
+            }
+            onClicked: function () {
+                started = !started
+            }
+        }
+    }
+
+    Connections {
+        target: _rangeDisplayer
+        function onRangeLoaded(rangeName) {
+            panelRect.rangeLoaded = true
         }
     }
 
@@ -68,10 +94,10 @@ Rectangle {
                     implicitWidth: 30
                     width: panelRect.width / 8
                     height: width
-                    color: baseRange.color
+                    color: currentGridItem.baseRange.color
                 }
                 Text {
-                    text: baseRange.weight + "%"
+                    text: currentGridItem.baseRange.weight + "%"
                 }
             }
         }
@@ -79,6 +105,8 @@ Rectangle {
         Component {
             id: subrangesComp
             Column {
+                property var subranges: currentGridItem.subs
+                property var baseRange: currentGridItem.baseRange
                 Text {
                     text: currentGridItem.handText
                 }

@@ -66,6 +66,34 @@ GridView {
             text: model.name
             fontSizeMode: Text.Fit
         }
-        CellMouseArea {}
+        MouseArea {
+            id: cellMouseArea
+            enabled: false
+            anchors.fill: parent
+            hoverEnabled: true
+            onEntered: function () {
+                if (!parent.GridView.isCurrentItem)
+                    parent.deselectedOpacity = 0.6
+            }
+            onExited: function () {
+                if (!parent.GridView.isCurrentItem) {
+                    parent.deselectedOpacity = 1.0
+                }
+            }
+            onClicked: function() {
+                parent.deselectedOpacity = 1.0
+                if (parent.GridView.isCurrentItem) {
+                    parent.GridView.view.currentIndex = -1
+                } else {
+                    parent.GridView.view.currentIndex = parent.gridIndex
+                }
+            }
+        }
+        Connections {
+            target: _rangeDisplayer
+            function onRangeLoaded() {
+                cellMouseArea.enabled = true;
+            }
+        }
     }
 }

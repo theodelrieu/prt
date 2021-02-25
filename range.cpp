@@ -13,6 +13,11 @@ int Range::type() const
     return QStandardItem::ItemType::UserType;
 }
 
+QString const& Range::name() const
+{
+    return QString::fromStdString(_range.name());
+}
+
 QList<HandInfo> Range::toHandInfo() const
 {
     auto ret = emptyHandInfo();

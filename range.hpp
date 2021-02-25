@@ -15,6 +15,7 @@ public:
     Range(prc::range const& range, QObject* parent = nullptr);
 
     int type() const override;
+    QString const& name() const;
     QList<HandInfo> toHandInfo() const;
 
 private:

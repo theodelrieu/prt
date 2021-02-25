@@ -58,5 +58,5 @@ void RangeDisplayer::setRange(QModelIndex const& idx)
     for (auto const& elem : qAsConst(_handInfo))
         root->appendRow(new HandInfo(elem));
     endResetModel();
-    std::cout << "Loaded " << range->text().toStdString() << std::endl;
+    emit rangeLoaded(range->name());
 }

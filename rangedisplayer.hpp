@@ -24,6 +24,9 @@ public:
     QVariant data(QModelIndex const&, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
 
+signals:
+    void rangeLoaded(QString const&);
+
 public slots:
     void setRange(QModelIndex const&);
 
