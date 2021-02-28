@@ -63,7 +63,7 @@ Rectangle {
 
         Loader {
             id: handInfoLoader
-            sourceComponent: (__rangeLoaded && currentGridItem) ? (baseRangeButton.checked ? baseRangeComp : subrangesComp) : null
+            sourceComponent: (__rangeLoaded && currentGridItem && GlobalState.mode === Mode.View) ? (baseRangeButton.checked ? baseRangeComp : subrangesComp) : null
         }
     }
 

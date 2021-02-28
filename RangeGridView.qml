@@ -97,8 +97,9 @@ GridView {
     Connections {
         target: GlobalState
         function onModeChanged() {
+            gridView.currentIndex = -1
+            // TODO move start elsewhere
             if (GlobalState.mode === Mode.Quiz) {
-                gridView.currentIndex = -1
                 _quizer.start()
             }
         }
