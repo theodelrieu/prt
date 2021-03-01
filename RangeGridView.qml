@@ -11,6 +11,7 @@ GridView {
     anchors.fill: parent
     cellHeight: parent.height / 13
     cellWidth: cellHeight
+    property bool __quizAnswered: false
 
     model: _rangeDisplayer
     delegate: Rectangle {
@@ -24,43 +25,43 @@ GridView {
         property var baseRange: parentRange
         property int gridIndex: index
         property double deselectedOpacity: 1.0
+        property double selectedOpacity: (GlobalState.mode === Mode.Quiz ? 1.0 : 0.4)
         property alias handText: handText.text
+        property bool __isCurrentItem: GridView.isCurrentItem
 
         color: "#f5eeee"
-        opacity: GridView.isCurrentItem ? 0.2 : deselectedOpacity
+        opacity: __isCurrentItem ? selectedOpacity : deselectedOpacity
 
-        Item {
-            id: rangeInfoItem
-            Component {
-                id: baseRangeComp
-                Rectangle {
-                    visible: GlobalState.mode === Mode.View
-                    width: cell.width
-                    height: cell.height * (baseRange.weight / 100)
-                    color: baseRange.color
-                }
+        Component {
+            id: baseRangeComp
+            Rectangle {
+                visible: GlobalState.mode === Mode.View || (GlobalState.mode === Mode.Quiz && cell.__isCurrentItem && gridView.__quizAnswered)
+                width: cell.width
+                height: cell.height * (baseRange.weight / 100)
+                color: baseRange.color
             }
+        }
 
-            Component {
-                id: subrangesComp
-                Column {
-                    Repeater {
-                        model: subs
-                        Rectangle {
-                            visible: GlobalState.mode === Mode.View
-                            property double baseWeight: baseRange.weight / 100
-                            width: cell.width
-                            height: cell.height * (modelData.weight / 100) * (GlobalState.weightType === WeightType.Absolute ? baseWeight : 1)
-                            color: modelData.color
-                        }
+        Component {
+            id: subrangesComp
+            Column {
+                Repeater {
+                    model: subs
+                    Rectangle {
+                        visible: GlobalState.mode === Mode.View || (GlobalState.mode === Mode.Quiz && cell.__isCurrentItem && gridView.__quizAnswered)
+
+                        property double baseWeight: baseRange.weight / 100
+                        width: cell.width
+                        height: cell.height * (modelData.weight / 100) * (GlobalState.weightType === WeightType.Absolute ? baseWeight : 1)
+                        color: modelData.color
                     }
                 }
             }
+        }
 
-            Loader {
-                id: rangeInfoLoader
-                sourceComponent: (GlobalState.rangeType === RangeType.Base ? baseRangeComp : subrangesComp)
-            }
+        Loader {
+            id: rangeInfoLoader
+            sourceComponent: (GlobalState.rangeType === RangeType.Base ? baseRangeComp : subrangesComp)
         }
 
         Text {
@@ -98,17 +99,19 @@ GridView {
         target: GlobalState
         function onModeChanged() {
             gridView.currentIndex = -1
-            // TODO move start elsewhere
-            if (GlobalState.mode === Mode.Quiz) {
-                _quizer.start()
-            }
         }
     }
     Connections {
         target: _quizer
-        function onNewQuiz(idx, info) {
+        function onNewQuiz(idx) {
             gridView.currentIndex = idx
-            console.log("Is", gridView.currentItem.handText, "in the", info.name, "range?")
+            gridView.__quizAnswered = false
+        }
+    }
+    Connections {
+        target: _quizer
+        function onAnswered() {
+            gridView.__quizAnswered = true
         }
     }
 }

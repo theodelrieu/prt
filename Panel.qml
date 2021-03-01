@@ -9,6 +9,7 @@ Rectangle {
 
     property Item currentGridItem
     property bool __rangeLoaded: false
+    property bool __quizAnswered: false
 
     ColumnLayout {
         id: weightsLayout
@@ -32,7 +33,8 @@ Rectangle {
             text: "Relative"
         }
     }
-    ColumnLayout{
+
+    ColumnLayout {
         id: rangeKindLayout
         anchors.top: weightsLayout.bottom
         Text {
@@ -57,33 +59,103 @@ Rectangle {
 
     Rectangle {
         id: handInfoRect
-        height: (panelRect.height - rangeKindLayout.height) / 2
+        height: (panelRect.height - weightsLayout.height - rangeKindLayout.height) / 3
         anchors { top: rangeKindLayout.bottom; right: panelRect.right; left: panelRect.left }
         color: "purple"
 
         Loader {
             id: handInfoLoader
-            sourceComponent: (__rangeLoaded && currentGridItem && GlobalState.mode === Mode.View) ? (baseRangeButton.checked ? baseRangeComp : subrangesComp) : null
+            sourceComponent: (__rangeLoaded && currentGridItem && (GlobalState.mode === Mode.View || panelRect.__quizAnswered)) ? (baseRangeButton.checked ? baseRangeComp : subrangesComp) : null
         }
     }
 
     Rectangle {
-        anchors { bottom: panelRect.bottom; right: panelRect.right; left: panelRect.left; top: handInfoRect.bottom }
+        id: quizChoicesRect
+        visible: GlobalState.mode === Mode.Quiz
+        color: "white"
+        height: handInfoRect.height
+        anchors { top: handInfoRect.bottom; right: panelRect.right; left: panelRect.left }
+        property alias text: quizQuestionText.text
+        ColumnLayout {
+            anchors.fill: parent
+            Text {
+                Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
+                id: quizQuestionText
+                width: parent.width
+                textFormat: Text.StyledText
+                wrapMode: Text.Wrap
+            }
+            Component {
+                id: quizChoicesComp
+            RowLayout {
+                Layout.alignment: Qt.AlignBottom
+                Button {
+                    id: quizYesButton
+                    Layout.fillWidth: true
+                    Layout.maximumWidth: quizChoicesRect.width / 2
+                    Text {
+                        anchors.centerIn: parent
+                        text: "Yes"
+                    }
+                    onClicked: {
+                        _quizer.answer(true)
+                    }
+                }
+                Button {
+                    id: quizNoButton
+                    Layout.fillWidth: true
+                    Layout.maximumWidth: quizChoicesRect.width / 2
+                    Text {
+                        anchors.centerIn: parent
+                        text: "No"
+                    }
+                    onClicked: {
+                        _quizer.answer(false)
+                    }
+                }
+            }
+            }
+            Component {
+                id: quizNextComp
+                Button {
+                    id: quizNextButton
+                    Text {
+                        anchors.centerIn: parent
+                        text: "Next"
+                    }
+                    onClicked: {
+                        _quizer.next();
+                    }
+                }
+            }
+            Loader {
+                id: quizButtonsLoader
+                sourceComponent: panelRect.__quizAnswered ? quizNextComp : quizChoicesComp
+            }
+        }
+    }
+
+    Rectangle {
+        anchors { bottom: panelRect.bottom; right: panelRect.right; left: panelRect.left; top: quizChoicesRect.bottom }
         color: "cyan"
         Button {
             id: quizButton
             enabled: panelRect.__rangeLoaded
-            anchors.centerIn: parent
             Text {
                 id: quizText
                 anchors.centerIn: parent
                 text: GlobalState.mode === Mode.View ? "Start quiz" : "Stop quiz"
             }
+            anchors.centerIn: parent
             onClicked: function () {
-                if (GlobalState.mode === Mode.View)
+                if (GlobalState.mode === Mode.View) {
                     GlobalState.mode = Mode.Quiz
-                else
+                    _quizer.start()
+                }
+                else {
                     GlobalState.mode = Mode.View
+                    _quizer.stop()
+                }
             }
         }
     }
@@ -92,6 +164,22 @@ Rectangle {
         target: _rangeDisplayer
         function onRangeLoaded(rangeName) {
             panelRect.__rangeLoaded = true
+        }
+    }
+
+    Connections {
+        target: _quizer
+        function onNewQuiz(idx, txt) {
+            quizChoicesRect.text = txt
+            panelRect.__quizAnswered = false;
+        }
+    }
+
+    Connections {
+        target: _quizer
+        function onAnswered(result) {
+            quizChoicesRect.text = result
+            panelRect.__quizAnswered = true;
         }
     }
 

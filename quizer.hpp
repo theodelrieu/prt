@@ -14,16 +14,22 @@ public:
 
 public slots:
     void start();
+    void next();
     void stop();
+    void answer(bool);
 
 signals:
-    void newQuiz(int handIdx, RangeInfo const&);
+    void newQuiz(int handIdx, QString const& question);
+    void answered(QString const& result);
 
 private:
+    void nextQuiz();
+
     RangeDisplayer* _displayer;
+    std::mt19937 _rng;
+    bool _answer;
     int _succeededAttempts{};
     int _totalAttempts{};
-    std::mt19937 _rng;
 };
 
 #endif // QUIZER_HPP

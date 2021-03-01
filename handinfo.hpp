@@ -11,6 +11,7 @@
 class HandInfo : public QStandardItem
 {
 public:
+    HandInfo() = default;
     HandInfo(QString const& name, RangeInfo const& parentRange, QList<RangeInfo> const& subranges = {});
 
     QString const& name() const;
