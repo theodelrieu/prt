@@ -7,9 +7,9 @@
         <file>RangeGridView.qml</file>
         <file>RangeTreeView.qml</file>
         <file>GlobalState.qml</file>
-        <file>Mode.qml</file>
         <file>qmldir</file>
-        <file>WeightType.qml</file>
-        <file>RangeType.qml</file>
+        <file>Enums/Mode.qml</file>
+        <file>Enums/WeightType.qml</file>
+        <file>Enums/RangeType.qml</file>
     </qresource>
 </RCC>

@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.5
 import QtQuick.Controls 2.15
 import "."
+import "Enums"
 
 Rectangle {
     id: panelRect

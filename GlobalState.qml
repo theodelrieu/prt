@@ -1,6 +1,7 @@
 pragma Singleton
 
 import QtQuick 2.0
+import "Enums"
 
 QtObject {
     property int mode: Mode.View
