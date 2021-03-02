@@ -5,8 +5,7 @@ import QtQuick.Controls 2.15
 Item {
     implicitHeight: 640
     implicitWidth: 400
-    height: window.height
-    width: window.width
+
     FileDialog {
         id: equilabDialog
         folder: shortcuts.documents

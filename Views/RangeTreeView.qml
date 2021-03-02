@@ -1,21 +1,21 @@
 import QtQuick 2.15
 import QtQuick.Controls 1.4 as C1
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.5
 
+// TODO replace with something else since TreeView is not in Controls2?
 C1.TreeView {
     id: treeView
     model: _rangeTreeModel
-    anchors.fill: parent
+    alternatingRowColors: false
 
     C1.TableViewColumn {
+        id: treeColumn
         title: "Ranges"
         role: "display"
+        width: 500
     }
 
     itemDelegate: Item {
         Text {
-            anchors.verticalCenter: parent.VerticalCenter
             text: styleData.value
         }
     }
@@ -25,6 +25,21 @@ C1.TreeView {
             treeView.collapse(idx)
         else
             treeView.expand(idx)
+    }
+    Timer {
+        id: resizeToColumnsTimer
+        interval: 4000
+        repeat: false
+        onTriggered: {
+            console.log("before width =", treeColumn.width)
+            treeView.resizeColumnsToContents();
+            console.log("after width =", treeColumn.width)
+        }
+    }
+
+    onExpanded: {
+        // this is broken
+        resizeToColumnsTimer.start();
     }
 
     onCurrentIndexChanged: function () {

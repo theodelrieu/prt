@@ -2,30 +2,24 @@ import QtQuick 2.15
 import QtQuick.Controls 1.4 as C1
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.5
-import "."
-import "Enums"
+import ".."
+import "../Enums"
+import "../Views"
 
 Rectangle {
-    id: mainScreen
-    height: window.height
-    width: window.width
+    id: gridScreen
     color: "red"
 
-    Rectangle {
-        id: treeRect
+    RangeTreeView {
+        id: treeView
         visible: GlobalState.mode === Mode.View
         height: parent.height
         width: parent.width / 4
-        color: "black"
-
-        RangeTreeView {
-            id: treeView
-        }
     }
 
     Rectangle {
         id: mainRect
-        anchors { top: parent.top; bottom: parent.bottom; right: parent.right; left: treeRect.right }
+        anchors { top: parent.top; bottom: parent.bottom; right: parent.right; left: treeView.right }
         color: "green"
 
         Rectangle {

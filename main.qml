@@ -2,26 +2,38 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
 
+import "Screens"
+
 Window {
     id: window
+    visible: true
     minimumWidth: 1000
     minimumHeight: 600
     width: 1000
     height: 600
-    visible: true
     title: "Poker range trainer"
+
+    Component {
+        id: gridScreen
+        GridScreen {}
+    }
+    Component {
+        id: importScreen
+        ImportScreen {}
+    }
 
     Loader {
         id: pageLoader
         anchors.fill: parent
-        source: "RangeImporter.qml"
+
+        property bool rangesParsed: false
+        sourceComponent: rangesParsed ? gridScreen : importScreen
     }
 
     Connections {
         target: _rangeLoader
         function onParseEnded(success) {
-            if (success)
-                pageLoader.source = "MainScreen.qml"
+           pageLoader.rangesParsed = success
         }
 
     }
