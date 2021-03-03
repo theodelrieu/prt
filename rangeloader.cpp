@@ -32,7 +32,7 @@ void RangeLoader::handleFinished()
         _root = _watcher.result();
         _tree->setRoot(_root);
         emit parseEnded(true);
-    }  catch (std::exception const& e) {
+    }  catch (std::exception const&) {
         std::cerr << "parseEquilab failed"<< std::endl;
         emit parseEnded(false);
     }
@@ -41,5 +41,5 @@ void RangeLoader::handleFinished()
 
 void RangeLoader::handleCanceled()
 {
-  emit parseEnded(false);
+    emit parseEnded(false);
 }

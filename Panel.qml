@@ -14,6 +14,7 @@ Rectangle {
 
     ColumnLayout {
         id: weightsLayout
+
         Text {
             text: "Weights"
             font.underline: true
@@ -59,9 +60,24 @@ Rectangle {
     }
 
     Rectangle {
+        id: rangeNameRect
+        color: "green"
+        implicitHeight: txt.height
+        width: parent.width
+        anchors { top: rangeKindLayout.bottom }
+
+        Text {
+            id: txt
+            text: GlobalState.rangeName
+            width: parent.width
+            wrapMode: Text.Wrap
+        }
+    }
+
+    Rectangle {
         id: handInfoRect
         height: (panelRect.height - weightsLayout.height - rangeKindLayout.height) / 3
-        anchors { top: rangeKindLayout.bottom; right: panelRect.right; left: panelRect.left }
+        anchors { top: rangeNameRect.bottom; right: panelRect.right; left: panelRect.left }
         color: "purple"
 
         Loader {
@@ -82,39 +98,39 @@ Rectangle {
             Text {
                 Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
                 id: quizQuestionText
-                width: parent.width
+                Layout.maximumWidth: parent.width
                 textFormat: Text.StyledText
                 wrapMode: Text.Wrap
             }
             Component {
                 id: quizChoicesComp
-            RowLayout {
-                Layout.alignment: Qt.AlignBottom
-                Button {
-                    id: quizYesButton
-                    Layout.fillWidth: true
-                    Layout.maximumWidth: quizChoicesRect.width / 2
-                    Text {
-                        anchors.centerIn: parent
-                        text: "Yes"
+                RowLayout {
+                    Layout.alignment: Qt.AlignBottom
+                    Button {
+                        id: quizYesButton
+                        Layout.fillWidth: true
+                        Layout.maximumWidth: quizChoicesRect.width / 2
+                        Text {
+                            anchors.centerIn: parent
+                            text: "Yes"
+                        }
+                        onClicked: {
+                            _quizer.answer(true)
+                        }
                     }
-                    onClicked: {
-                        _quizer.answer(true)
+                    Button {
+                        id: quizNoButton
+                        Layout.fillWidth: true
+                        Layout.maximumWidth: quizChoicesRect.width / 2
+                        Text {
+                            anchors.centerIn: parent
+                            text: "No"
+                        }
+                        onClicked: {
+                            _quizer.answer(false)
+                        }
                     }
                 }
-                Button {
-                    id: quizNoButton
-                    Layout.fillWidth: true
-                    Layout.maximumWidth: quizChoicesRect.width / 2
-                    Text {
-                        anchors.centerIn: parent
-                        text: "No"
-                    }
-                    onClicked: {
-                        _quizer.answer(false)
-                    }
-                }
-            }
             }
             Component {
                 id: quizNextComp

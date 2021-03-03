@@ -21,6 +21,42 @@ TreeViewModel::TreeViewModel(QObject* parent)  : QStandardItemModel(parent)
 {
 }
 
+QVariant TreeViewModel::data(const QModelIndex &idx, int role) const
+{
+    if (!idx.isValid())
+        return {};
+    if (role < NameRole || role >= LastRole)
+        return {};
+    auto item = itemFromIndex(idx);
+    if (!item)
+        return {};
+    switch (role)
+    {
+    case NameRole:
+        return item->text();
+    case TypeRole:
+        return dynamic_cast<Range*>(item) ? "range" : "folder";
+    case IndexRole:
+        return idx;
+    default:
+        return {};
+    }
+}
+
+QPersistentModelIndex TreeViewModel::rootIndex() const
+{
+    return invisibleRootItem()->index();
+}
+
+QHash<int, QByteArray> TreeViewModel::roleNames() const
+{
+    QHash<int, QByteArray> names;
+    names[NameRole] = "name";
+    names[TypeRole] = "type";
+    names[IndexRole] = "persistentIndex";
+    return names;
+}
+
 void TreeViewModel::setRoot(prc::folder const& f)
 {
     beginResetModel();

@@ -12,9 +12,7 @@ Rectangle {
 
     RangeTreeView {
         id: treeView
-        visible: GlobalState.mode === Mode.View
-        height: parent.height
-        width: parent.width / 4
+        interactive: GlobalState.mode === Mode.View
     }
 
     Rectangle {
@@ -41,9 +39,10 @@ Rectangle {
     }
     Connections {
         target: _rangeDisplayer
-        function onRangeLoaded() {
+        function onRangeLoaded(name) {
             if (!GlobalState.rangeLoaded)
                 GlobalState.rangeLoaded = true
+            GlobalState.rangeName = name
         }
     }
 }
