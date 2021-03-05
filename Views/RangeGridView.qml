@@ -26,7 +26,7 @@ GridView {
         property var baseRange: parentRange
         property int gridIndex: index
         property double deselectedOpacity: 1.0
-        property double selectedOpacity: (GlobalState.mode === Mode.Quiz ? 1.0 : 0.4)
+        property double selectedOpacity: (GlobalState.mode === Mode.Quiz && __quizAnswered ? 1.0 : 0.4)
         property alias handText: handText.text
         property bool __isCurrentItem: GridView.isCurrentItem
 
