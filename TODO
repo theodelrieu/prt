@@ -1,5 +1,12 @@
 cleanup quizer
 Do not embed RangeInfo into HandInfo? (latter never changes)
-Once Yes/No quiz works, show info (on quiz end only)
 
-Handle multiple-step quiz ?
+Support multiple quiz types:
+
+* Is XX in range (>= YY%)
+* Choose most common action for XX (1 button per subrange)
+
+send a list of button texts in signal, use repeater + gridlayout
+implement pio ranges import
+save ranges on filesystem
+add a way to reimport ranges
