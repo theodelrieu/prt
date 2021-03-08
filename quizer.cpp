@@ -64,18 +64,37 @@ void Quizer::nextInSubrangeQuiz(HandInfo const* hand, int handIndex)
     emit newQuiz(handIndex, question, choices);
 }
 
+void Quizer::nextMostPlayedQuiz(HandInfo const *hand, int handIndex)
+{
+    auto const& subrangeInfo = _displayer->currentRange()->subrangeInfo();
+    auto subrangeIt = std::max_element(hand->subranges().begin(), hand->subranges().end(),
+                   [&](auto const& lhs, auto const& rhs){ return lhs.weight() < rhs.weight(); });
+    // TODO throw?
+    if (subrangeIt == hand->subranges().end())
+        return;
+    auto subrangeIndexIt = std::find_if(subrangeInfo.begin(), subrangeInfo.end(),
+                                      [&](auto const& elem) { return subrangeIt->name() == elem.name() && subrangeIt->color() == elem.color(); });
+    if (subrangeIndexIt == subrangeInfo.end())
+        return;
+    _correctAnswerButtonIndex = std::distance(subrangeInfo.begin(), subrangeIndexIt);
+    auto const question = QString("What is the most played for <b>%1</b>?").arg(hand->name());
+    QList<QuizChoice> choices;
+    for (auto const& sub : subrangeInfo)
+        choices.append(QuizChoice{sub.name(), sub.color()});
+    emit newQuiz(handIndex, question, choices);
+}
+
 void Quizer::nextQuiz()
 {
     auto const [quizType, handInfo, handIndex] = nextQuizParams();
     nextInSubrangeQuiz(handInfo, handIndex);
-            /*
+
     switch (quizType) {
     case QuizType::InBaseRange:
-        nextInBaseRangeQuiz(handIndex);
+        return;
     case QuizType::InSubrange:
-        nextInSubrangeQuiz(handIndex);
+        nextInSubrangeQuiz(handInfo, handIndex);
     case QuizType::MostPlayed:
-        nextMostPlayedQuiz(handIndex);
+        nextMostPlayedQuiz(handInfo, handIndex);
     }
-            */
 }
