@@ -37,6 +37,7 @@ set(PROJECT_SOURCES
         handinfo.cpp
         rangeinfo.cpp
         quizer.cpp
+        quizchoice.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

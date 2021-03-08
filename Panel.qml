@@ -93,41 +93,33 @@ Rectangle {
         height: handInfoRect.height
         anchors { top: handInfoRect.bottom; right: panelRect.right; left: panelRect.left }
         property alias text: quizQuestionText.text
+        property var choices: []
         ColumnLayout {
             anchors.fill: parent
             Text {
-                Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
                 id: quizQuestionText
+                Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
                 Layout.maximumWidth: parent.width
                 textFormat: Text.StyledText
                 wrapMode: Text.Wrap
             }
             Component {
                 id: quizChoicesComp
-                RowLayout {
-                    Layout.alignment: Qt.AlignBottom
-                    Button {
-                        id: quizYesButton
-                        Layout.fillWidth: true
-                        Layout.maximumWidth: quizChoicesRect.width / 2
-                        Text {
-                            anchors.centerIn: parent
-                            text: "Yes"
-                        }
-                        onClicked: {
-                            _quizer.answer(true)
-                        }
-                    }
-                    Button {
-                        id: quizNoButton
-                        Layout.fillWidth: true
-                        Layout.maximumWidth: quizChoicesRect.width / 2
-                        Text {
-                            anchors.centerIn: parent
-                            text: "No"
-                        }
-                        onClicked: {
-                            _quizer.answer(false)
+                GridLayout {
+                    columns: 2
+                    Repeater {
+                        model: quizChoicesRect.choices
+                        delegate: Button {
+                            Layout.fillWidth: true
+                            Text {
+                                anchors.centerIn: parent
+                                text: modelData.text
+                                color: modelData.textColor
+                                font.bold: true
+                            }
+                            onClicked: {
+                                _quizer.answer(index)
+                            }
                         }
                     }
                 }
@@ -147,6 +139,7 @@ Rectangle {
             }
             Loader {
                 id: quizButtonsLoader
+                Layout.fillWidth: true
                 sourceComponent: panelRect.__quizAnswered ? quizNextComp : quizChoicesComp
             }
         }
@@ -186,8 +179,9 @@ Rectangle {
 
     Connections {
         target: _quizer
-        function onNewQuiz(idx, txt) {
+        function onNewQuiz(idx, txt, choices) {
             quizChoicesRect.text = txt
+            quizChoicesRect.choices = choices;
             panelRect.__quizAnswered = false;
         }
     }

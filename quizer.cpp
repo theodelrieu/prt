@@ -18,10 +18,10 @@ void Quizer::next()
     nextQuiz();
 }
 
-void Quizer::answer(bool b)
+void Quizer::answer(int buttonIndex)
 {
     _totalAttempts++;
-    auto const isCorrect = b == _answer;
+    auto const isCorrect = buttonIndex == _correctAnswerButtonIndex;
     _succeededAttempts += isCorrect;
     QString result = (isCorrect ? "<font color=\"green\"><b>Correct!</b></font>" : "<font color=\"red\"><b>Wrong!</b></font>");
     result += " %1 / %2";
@@ -34,28 +34,48 @@ void Quizer::stop()
     _succeededAttempts = 0;
 }
 
-void Quizer::nextQuiz()
+auto Quizer::nextQuizParams() -> std::tuple<QuizType, HandInfo const*, int>
 {
     // FIXME construct handInfo once (with new)
     auto const& handInfo = _displayer->handInfo();
-    auto const currentRange = _displayer->currentRange();
-    auto const subrangeInfo = currentRange->subrangeInfo();
-    // TODO handle parent range only, and refactor this mess
-    if (subrangeInfo.empty())
-        return;
-    auto distrib = std::uniform_int_distribution<int>(0, 168);
-    auto subrangeDistrib = std::uniform_int_distribution<int>(0, subrangeInfo.size() - 1);
-    for (;;) {
-        auto i = distrib(_rng);
-        if (handInfo[i].parentRange().weight() == 0)
-            continue;
-        auto j = subrangeDistrib(_rng);
-        auto const& subrange = subrangeInfo.at(j);
-        auto it = std::find_if(handInfo[i].subranges().begin(), handInfo[i].subranges().end(), [&](auto const& sub){ return sub.name() == subrange.name() && sub.color() == subrange.color();});
-        _answer = it != handInfo[i].subranges().end();
-        auto rgb = subrange.color().name();
-        auto const question = QString("Is <b>%1</b> in the <font color=\"%2\"><b>%3</b></font> range?").arg(handInfo[i].name()).arg(rgb).arg(subrange.name());
-        emit newQuiz(i, question);
-        break;
+    std::uniform_int_distribution distrib(0, 168);
+    auto idx = distrib(_rng);
+    // no subranges, simply quiz about the parent range
+    if (_displayer->currentRange()->subrangeInfo().empty())
+        return {QuizType::InBaseRange, std::addressof(handInfo[idx]), idx};
+    while (handInfo[idx].parentRange().weight() == 0)
+        idx = distrib(_rng);
+    std::uniform_int_distribution quizTypeDistrib(0, 1);
+    return {static_cast<QuizType>(quizTypeDistrib(_rng)), std::addressof(handInfo[idx]), idx};
+}
+
+void Quizer::nextInSubrangeQuiz(HandInfo const* hand, int handIndex)
+{
+    auto const& subrangeInfo = _displayer->currentRange()->subrangeInfo();
+    std::uniform_int_distribution distrib(0, subrangeInfo.size() - 1);
+    auto const subrangeIndex = distrib(_rng);
+    auto const& subrange = subrangeInfo.at(subrangeIndex);
+    auto const hasSubrange = std::any_of(hand->subranges().begin(), hand->subranges().end(),
+                     [&](auto const& sub){ return sub.name() == subrange.name() && sub.color() == subrange.color(); });
+    auto const question = QString("Is <b>%1</b> in the <font color=\"%2\"><b>%3</b></font> range?")
+            .arg(hand->name(), subrange.color().name(), subrange.name());
+    QList<QuizChoice> choices{QuizChoice{"Yes"}, QuizChoice{"No"}};
+    _correctAnswerButtonIndex = !hasSubrange;
+    emit newQuiz(handIndex, question, choices);
+}
+
+void Quizer::nextQuiz()
+{
+    auto const [quizType, handInfo, handIndex] = nextQuizParams();
+    nextInSubrangeQuiz(handInfo, handIndex);
+            /*
+    switch (quizType) {
+    case QuizType::InBaseRange:
+        nextInBaseRangeQuiz(handIndex);
+    case QuizType::InSubrange:
+        nextInSubrangeQuiz(handIndex);
+    case QuizType::MostPlayed:
+        nextMostPlayedQuiz(handIndex);
     }
+            */
 }
