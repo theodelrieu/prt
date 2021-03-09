@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Dialogs 1.3
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.12
 
 Item {
     implicitHeight: 640
@@ -8,7 +9,8 @@ Item {
 
     FileDialog {
         id: equilabDialog
-        folder: shortcuts.documents
+        folder: shortcuts.home
+        title: "Select Equilab range file"
         defaultSuffix: "hr"
         nameFilters: ["Equilab range files (*.hr)"]
         onAccepted: {
@@ -17,11 +19,11 @@ Item {
     }
     FileDialog {
         id: pioDialog
-        folder: shortcuts.documents
-        defaultSuffix: "txt"
-        nameFilters: ["PioSOLVER range files (*.txt)"]
+        title: "Select PioSOLVER ranges folder"
+        folder: shortcuts.home
+        selectFolder: true
         onAccepted: {
-            _rangeLoader.parsePio(pioDialog.fileUrls)
+            _rangeLoader.parsePio(pioDialog.fileUrl)
         }
     }
 
@@ -37,28 +39,31 @@ Item {
         }
     }
 
-    ColumnView {
-    Button {
-        id: equilabButton
-        anchors.centerIn: parent
-        height: 100
-        width: 200
-        onClicked: equilabDialog.open()
-        Text {
-            text: "Import Equilab ranges"
-            anchors.centerIn: parent
+    ColumnLayout {
+        anchors.fill: parent
+        Button {
+            id: equilabButton
+            Layout.alignment: Qt.AlignCenter
+            Layout.preferredHeight: parent.height * 0.3
+            Layout.preferredWidth: parent.width * 0.3
+
+            onClicked: equilabDialog.open()
+            Text {
+                id: txt
+                text: "Import Equilab ranges"
+                anchors.centerIn: parent
+            }
         }
-    }
-    Button {
-        id: pioButton
-        anchors.centerIn: parent
-        height: 100
-        width: 200
-        onClicked: pioDialog.open()
-        Text {
-            text: "Import PioSOLVER ranges"
-            anchors.centerIn: parent
+        Button {
+            id: pioButton
+            Layout.alignment: Qt.AlignCenter
+            Layout.preferredHeight: parent.height * 0.3
+            Layout.preferredWidth: parent.width * 0.3
+            onClicked: pioDialog.open()
+            Text {
+                text: "Import PioSOLVER ranges"
+                anchors.centerIn: parent
+            }
         }
-    }
     }
 }
