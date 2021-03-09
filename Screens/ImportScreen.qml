@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.15
 import QtQuick.Dialogs 1.3
 import QtQuick.Controls 2.15
 
@@ -15,6 +15,15 @@ Item {
             _rangeLoader.parseEquilab(equilabDialog.fileUrl)
         }
     }
+    FileDialog {
+        id: pioDialog
+        folder: shortcuts.documents
+        defaultSuffix: "txt"
+        nameFilters: ["PioSOLVER range files (*.txt)"]
+        onAccepted: {
+            _rangeLoader.parsePio(pioDialog.fileUrls)
+        }
+    }
 
     Connections {
         target: _rangeLoader
@@ -28,6 +37,7 @@ Item {
         }
     }
 
+    ColumnView {
     Button {
         id: equilabButton
         anchors.centerIn: parent
@@ -38,5 +48,17 @@ Item {
             text: "Import Equilab ranges"
             anchors.centerIn: parent
         }
+    }
+    Button {
+        id: pioButton
+        anchors.centerIn: parent
+        height: 100
+        width: 200
+        onClicked: pioDialog.open()
+        Text {
+            text: "Import PioSOLVER ranges"
+            anchors.centerIn: parent
+        }
+    }
     }
 }

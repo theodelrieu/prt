@@ -16,6 +16,7 @@ public:
 
 public slots:
     void parseEquilab(QString const& fullpath);
+    void parsePio(QList<QString> const& fullpaths);
 
 signals:
     void parseStarted();
