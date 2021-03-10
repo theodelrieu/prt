@@ -10,3 +10,5 @@ send a list of button texts in signal, use repeater + gridlayout
 implement pio ranges import
 save ranges on filesystem
 add a way to reimport ranges
+
+LOOK WHY 30bbs SB_Call_BB_AllIn_SB_strategy has A9s at 0.000000x%, shows at 0% but is a 100% raise in SB_strategy
