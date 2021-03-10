@@ -14,9 +14,9 @@ namespace fs = std::filesystem;
 RangeLoader::RangeLoader(TreeViewModel *tree, QObject *parent)
     : QObject(parent), _tree(tree) {
     connect(&_watcher, &decltype(_watcher)::finished, this,
-        &RangeLoader::handleFinished);
+            &RangeLoader::handleFinished);
     connect(&_watcher, &decltype(_watcher)::canceled, this,
-        &RangeLoader::handleCanceled);
+            &RangeLoader::handleCanceled);
 }
 
 void RangeLoader::parseEquilab(QString const &url) {
@@ -28,11 +28,18 @@ void RangeLoader::parseEquilab(QString const &url) {
 
 void RangeLoader::parsePio(QString const &url) {
     auto fut = QtConcurrent::run([url] {
-        auto const fullpath =
-                fs::path{QUrl(url).toLocalFile().toStdString()};
-        if (!fs::is_directory(fullpath))
+        auto const fullpath = fs::path{QUrl(url).toLocalFile().toStdString()};
+        if (!fs::is_directory(fullpath)) {
+            std::cerr << fullpath << " is not a directory" << std::endl;
             throw std::runtime_error(fullpath.string() + " is not a directory");
-        return prc::pio::parse_folder(fullpath);
+        }
+        try {
+            return prc::pio::parse_folder(fullpath);
+        } catch (std::exception const &e) {
+            std::cerr << "prc::pio::parse_folder(\"" << fullpath << "\") failed"
+                      << e.what() << std::endl;
+            throw;
+        }
     });
     _watcher.setFuture(std::move(fut));
     emit parseStarted();
