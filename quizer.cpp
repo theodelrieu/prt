@@ -52,7 +52,7 @@ auto Quizer::nextQuizParams() -> std::tuple<QuizType, HandInfo const*, int>
 void Quizer::nextInSubrangeQuiz(HandInfo const* hand, int handIndex)
 {
     auto const& subrangeInfo = _displayer->currentRange()->subrangeInfo();
-    std::uniform_int_distribution distrib(0, subrangeInfo.size() - 1);
+    std::uniform_int_distribution<int> distrib(0, subrangeInfo.size() - 1);
     auto const subrangeIndex = distrib(_rng);
     auto const& subrange = subrangeInfo.at(subrangeIndex);
     auto const hasSubrange = std::any_of(hand->subranges().begin(), hand->subranges().end(),

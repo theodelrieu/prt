@@ -24,8 +24,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(QT NAMES Qt5 COMPONENTS Core Quick Concurrent REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick Concurrent REQUIRED)
+find_package(Qt6 COMPONENTS Core Quick Concurrent REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -40,25 +39,13 @@ set(PROJECT_SOURCES
         quizchoice.cpp
 )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(prt
-        ${PROJECT_SOURCES}
-    )
-else()
-    if(ANDROID)
-        add_library(prt SHARED
-            ${PROJECT_SOURCES}
-        )
-    else()
-        add_executable(prt
-          ${PROJECT_SOURCES}
-        )
-    endif()
-endif()
+qt_add_executable(prt
+  ${PROJECT_SOURCES}
+)
 
 add_subdirectory(prc)
 
 target_compile_definitions(prt
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(prt
-  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick libprc)
+  PRIVATE Qt6::Core Qt6::Quick libprc)

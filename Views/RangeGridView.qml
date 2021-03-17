@@ -1,5 +1,4 @@
 import QtQuick 2.15
-import QtQuick.Controls 1.4 as C1
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.5
 import ".."

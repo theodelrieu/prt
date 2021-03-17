@@ -1,41 +1,41 @@
 import QtQuick 2.15
-import QtQuick.Dialogs 1.3
+import Qt.labs.platform 1.1
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.12
 
 Item {
+    id: root
     implicitHeight: 640
     implicitWidth: 400
 
+    property bool __parsing: false
     FileDialog {
         id: equilabDialog
-        folder: shortcuts.home
         title: "Select Equilab range file"
         defaultSuffix: "hr"
         nameFilters: ["Equilab range files (*.hr)"]
         onAccepted: {
-            _rangeLoader.parseEquilab(equilabDialog.fileUrl)
+            equilabButton.highlighted = true
+            _rangeLoader.parseEquilab(equilabDialog.file)
         }
     }
-    FileDialog {
+    FolderDialog {
         id: pioDialog
         title: "Select PioSOLVER ranges folder"
-        folder: shortcuts.home
-        selectFolder: true
         onAccepted: {
-            _rangeLoader.parsePio(pioDialog.fileUrl)
+            pioButton.highlighted = true
+            _rangeLoader.parsePio(pioDialog.folder)
         }
     }
 
     Connections {
         target: _rangeLoader
         function onParseStarted() {
-            equilabButton.enabled = false
-            equilabButton.highlighted = true
+            root.__parsing = true;
         }
         function onParseEnded(success) {
-            equilabButton.enabled = true
-            equilabButton.highlighted = false
+            console.log("onParseEnded called", success)
+            root.__parsing = false;
         }
     }
 
@@ -43,6 +43,7 @@ Item {
         anchors.fill: parent
         Button {
             id: equilabButton
+            enabled: !root.__parsing
             Layout.alignment: Qt.AlignCenter
             Layout.preferredHeight: parent.height * 0.3
             Layout.preferredWidth: parent.width * 0.3
@@ -56,6 +57,7 @@ Item {
         }
         Button {
             id: pioButton
+            enabled: !root.__parsing
             Layout.alignment: Qt.AlignCenter
             Layout.preferredHeight: parent.height * 0.3
             Layout.preferredWidth: parent.width * 0.3

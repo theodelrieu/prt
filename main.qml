@@ -26,15 +26,6 @@ Window {
         id: pageLoader
         anchors.fill: parent
 
-        property bool rangesParsed: false
-        sourceComponent: rangesParsed ? gridScreen : importScreen
-    }
-
-    Connections {
-        target: _rangeLoader
-        function onParseEnded(success) {
-           pageLoader.rangesParsed = success
-        }
-
+        sourceComponent: _rangeLoader.hasLocalRanges ? gridScreen : importScreen
     }
 }

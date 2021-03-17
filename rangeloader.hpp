@@ -3,7 +3,6 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QFutureWatcher>
 
 #include <prc/folder.hpp>
 #include "treeviewmodel.hpp"
@@ -11,8 +10,11 @@
 class RangeLoader : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool hasLocalRanges READ hasLocalRanges NOTIFY hasLocalRangesChanged)
 public:
     explicit RangeLoader(TreeViewModel* tree, QObject *parent = nullptr);
+
+    bool hasLocalRanges() const;
 
 public slots:
     void parseEquilab(QString const& fullpath);
@@ -20,16 +22,15 @@ public slots:
 
 signals:
     void parseStarted();
+    void hasLocalRangesChanged();
     void parseEnded(bool success);
 
-private slots:
-    void handleFinished();
-    void handleCanceled();
-
 private:
-    QFutureWatcher<prc::folder> _watcher;
+    void writeLocalRanges();
+
     prc::folder _root;
     TreeViewModel* _tree;
+    bool _hasLocalRanges;
 };
 
 #endif // RANGELOADER_HPP

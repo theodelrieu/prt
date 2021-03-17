@@ -146,25 +146,30 @@ Rectangle {
     }
 
     Rectangle {
+        id: quizSettingsRect
         anchors { bottom: panelRect.bottom; right: panelRect.right; left: panelRect.left; top: quizChoicesRect.bottom }
         color: "cyan"
-        Button {
-            id: quizButton
-            enabled: panelRect.__rangeLoaded
-            Text {
-                id: quizText
-                anchors.centerIn: parent
-                text: GlobalState.mode === Mode.View ? "Start quiz" : "Stop quiz"
-            }
-            anchors.centerIn: parent
-            onClicked: function () {
-                if (GlobalState.mode === Mode.View) {
-                    GlobalState.mode = Mode.Quiz
-                    _quizer.start()
+        ColumnLayout {
+            Button {
+                id: quizButton
+                enabled: panelRect.__rangeLoaded
+                implicitWidth: quizText.width * 1.3
+                implicitHeight: quizText.height * 1.2
+                Text {
+                    id: quizText
+                    anchors.centerIn: parent
+                    text: GlobalState.mode === Mode.View ? "Start quiz" : "Stop quiz"
                 }
-                else {
-                    GlobalState.mode = Mode.View
-                    _quizer.stop()
+                anchors.centerIn: parent
+                onClicked: function () {
+                    if (GlobalState.mode === Mode.View) {
+                        GlobalState.mode = Mode.Quiz
+                        _quizer.start()
+                    }
+                    else {
+                        GlobalState.mode = Mode.View
+                        _quizer.stop()
+                    }
                 }
             }
         }
