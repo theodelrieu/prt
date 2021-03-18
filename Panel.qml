@@ -150,8 +150,10 @@ Rectangle {
         anchors { bottom: panelRect.bottom; right: panelRect.right; left: panelRect.left; top: quizChoicesRect.bottom }
         color: "cyan"
         ColumnLayout {
+            anchors.fill: parent
             Button {
                 id: quizButton
+                Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
                 enabled: panelRect.__rangeLoaded
                 implicitWidth: quizText.width * 1.3
                 implicitHeight: quizText.height * 1.2
@@ -160,7 +162,6 @@ Rectangle {
                     anchors.centerIn: parent
                     text: GlobalState.mode === Mode.View ? "Start quiz" : "Stop quiz"
                 }
-                anchors.centerIn: parent
                 onClicked: function () {
                     if (GlobalState.mode === Mode.View) {
                         GlobalState.mode = Mode.Quiz

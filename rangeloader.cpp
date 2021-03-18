@@ -37,8 +37,9 @@ bool RangeLoader::hasLocalRanges() const
 
 void RangeLoader::writeLocalRanges()
 {
-    auto const writablePath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation).toUtf8().toStdString();
-    auto const fullpath = fs::path{writablePath} / "ranges.hr";
+    fs::path const writablePath{QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation).toUtf8().toStdString()};
+    fs::create_directories(writablePath);
+    auto const fullpath = writablePath / "ranges.hr";
     auto const serialized = prc::equilab::serialize(_root);
     std::ofstream ofs{fullpath.string(), std::ios::trunc | std::ios::binary};
     ofs.write(reinterpret_cast<char const*>(serialized.data()), 2 * serialized.size());
