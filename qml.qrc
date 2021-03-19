@@ -4,9 +4,14 @@
         <file>Panel.qml</file>
         <file>GlobalState.qml</file>
         <file>qmldir</file>
+        <file>Components/CustomRadioButton.qml</file>
         <file>Enums/Mode.qml</file>
         <file>Enums/WeightType.qml</file>
         <file>Enums/RangeType.qml</file>
+        <file>Panel/DisplaySettings.qml</file>
+        <file>Panel/HandInfo.qml</file>
+        <file>Panel/QuizArea.qml</file>
+        <file>Panel/QuizMenu.qml</file>
         <file>Screens/ImportScreen.qml</file>
         <file>Screens/GridScreen.qml</file>
         <file>Views/RangeGridView.qml</file>
