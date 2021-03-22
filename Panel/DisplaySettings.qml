@@ -7,13 +7,18 @@ import "../Components"
 import ".."
 
 Item {
-    ColumnLayout {
-        id: firstLayout
-        Text {
-            text: "Weights"
-            font.underline: true
-        }
+    Layout.fillWidth: true
 
+    Text {
+        text: GlobalState.rangeName
+        Layout.fillWidth: true
+        wrapMode: Text.Wrap
+    }
+    Text {
+        text: "Weights"
+        font.underline: true
+    }
+    Item {
         CustomRadioButton {
             checked: true
             text: "Absolute"
@@ -29,12 +34,12 @@ Item {
         }
     }
 
-    ColumnLayout {
-        anchors.top: firstLayout.bottom
-        Text {
-            text: "Range kind"
-            font.underline: true
-        }
+    Text {
+        text: "Range kind"
+        font.underline: true
+    }
+
+    Item {
         CustomRadioButton {
             checked: true
             text: "Base range"

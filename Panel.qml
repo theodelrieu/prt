@@ -14,8 +14,10 @@ Rectangle {
     property bool __quizAnswered: false
 
     ColumnLayout {
+        id: layout
         anchors.fill: parent
 
+        // TODO use preferredHeight everywhere
         DisplaySettings { }
 
         /*Rectangle {
