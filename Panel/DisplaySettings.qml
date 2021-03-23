@@ -6,32 +6,44 @@ import "../Enums"
 import "../Components"
 import ".."
 
-Item {
+ColumnLayout {
     Layout.fillWidth: true
+    Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+
+    ButtonGroup {
+        id: weightButtonGroup
+    }
+
+    ButtonGroup {
+        id: rangeKindButtonGroup
+    }
 
     Text {
         text: GlobalState.rangeName
         Layout.fillWidth: true
         wrapMode: Text.Wrap
     }
+
     Text {
         text: "Weights"
         font.underline: true
     }
-    Item {
-        CustomRadioButton {
-            checked: true
-            text: "Absolute"
-            onCheckedChanged: {
-                if (checked)
-                    GlobalState.weightType = WeightType.Absolute
-                else
-                    GlobalState.weightType = WeightType.Relative
-            }
+
+    CustomRadioButton {
+        checked: true
+        text: "Absolute"
+        ButtonGroup.group: weightButtonGroup
+        onCheckedChanged: {
+            if (checked)
+                GlobalState.weightType = WeightType.Absolute
+            else
+                GlobalState.weightType = WeightType.Relative
         }
-        CustomRadioButton {
-            text: "Relative"
-        }
+    }
+
+    CustomRadioButton {
+        text: "Relative"
+        ButtonGroup.group: weightButtonGroup
     }
 
     Text {
@@ -39,19 +51,20 @@ Item {
         font.underline: true
     }
 
-    Item {
-        CustomRadioButton {
-            checked: true
-            text: "Base range"
-            onCheckedChanged: {
-                if (checked)
-                    GlobalState.rangeType = RangeType.Base
-                else
-                    GlobalState.rangeType = RangeType.Subranges
-            }
+    CustomRadioButton {
+        checked: true
+        text: "Base range"
+        ButtonGroup.group: rangeKindButtonGroup
+        onCheckedChanged: {
+            if (checked)
+                GlobalState.rangeType = RangeType.Base
+            else
+                GlobalState.rangeType = RangeType.Subranges
         }
-        CustomRadioButton {
-            text: "Subranges"
-        }
+    }
+
+    CustomRadioButton {
+        text: "Subranges"
+        ButtonGroup.group: rangeKindButtonGroup
     }
 }
