@@ -2,6 +2,8 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
+import ".."
+
 Rectangle {
     id: root
     color: "white"
@@ -36,7 +38,12 @@ Rectangle {
                 text: __modelName
                 onClicked: {
                     lv.currentIndex = model.index
-                    _rangeDisplayer.setRange(__modelPersistentIndex)
+                    if (__modelType === "folder") {
+                        GlobalState.rangeLoaded = false
+                        GlobalState.rangeName = ""
+                    } else {
+                        _rangeDisplayer.setRange(__modelPersistentIndex)
+                    }
                 }
 
                 onDoubleClicked: {

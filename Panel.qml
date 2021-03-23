@@ -17,9 +17,9 @@ Rectangle {
         id: layout
         anchors.fill: parent
 
-        // TODO use preferredHeight everywhere
         DisplaySettings { }
 
+        HandInfo { }
         /*Rectangle {
             id: rangeNameRect
             color: "green"

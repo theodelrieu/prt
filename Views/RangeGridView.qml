@@ -61,6 +61,7 @@ GridView {
 
         Loader {
             id: rangeInfoLoader
+            visible: GlobalState.rangeLoaded
             sourceComponent: (GlobalState.rangeType === RangeType.Base ? baseRangeComp : subrangesComp)
         }
 
@@ -99,6 +100,12 @@ GridView {
         target: GlobalState
         function onModeChanged() {
             gridView.currentIndex = -1
+        }
+        function onRangeLoadedChanged() {
+            console.log("onRangeLoadedChanged:", GlobalState.rangeLoaded)
+            if (!GlobalState.rangeLoaded) {
+                gridView.currentIndex = -1
+            }
         }
     }
     Connections {
