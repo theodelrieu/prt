@@ -8,6 +8,7 @@ import "Panel"
 Rectangle {
     id: panelRect
     color: "#eddcdc"
+    visible: GlobalState.rangeLoaded
 
     property Item currentGridItem
     property bool __rangeLoaded: false
@@ -19,21 +20,14 @@ Rectangle {
 
         DisplaySettings { }
 
-        HandInfo { }
-        /*Rectangle {
-            id: rangeNameRect
-            color: "green"
-            implicitHeight: txt.height
-            width: parent.width
-
-            Text {
-                id: txt
-                text: GlobalState.rangeName
-                width: parent.width
-                wrapMode: Text.Wrap
+        Loader {
+           sourceComponent: HandInfo {
+                currentGridItem: panelRect.currentGridItem
             }
         }
 
+
+        /*
         Rectangle {
             id: handInfoRect
             color: "purple"
