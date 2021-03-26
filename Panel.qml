@@ -17,11 +17,23 @@ Rectangle {
     ColumnLayout {
         id: layout
         anchors.fill: parent
-        spacing: 1
 
         DisplaySettings { }
-        HandInfo { currentGridItem: panelRect.currentGridItem }
+        Loader {
+            id: loader
+            sourceComponent: currentGridItem ? handInfoComp : null
+            onHeightChanged: { 
+                console.log("loader height:", loader.height)
+            }
+            onWidthChanged: {
+                console.log("loader width:", loader.width)
+            }
+        }
 
+        Component { 
+            id: handInfoComp
+            HandInfo { currentGridItem: panelRect.currentGridItem }
+        }
 
         /*
         Rectangle {
