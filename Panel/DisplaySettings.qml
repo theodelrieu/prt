@@ -7,8 +7,8 @@ import "../Components"
 import ".."
 
 ColumnLayout {
-    Layout.fillWidth: true
     Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+    Layout.fillWidth: true
 
     ButtonGroup {
         id: weightButtonGroup

@@ -17,14 +17,10 @@ Rectangle {
     ColumnLayout {
         id: layout
         anchors.fill: parent
+        spacing: 1
 
         DisplaySettings { }
-
-        Loader {
-           sourceComponent: HandInfo {
-                currentGridItem: panelRect.currentGridItem
-            }
-        }
+        HandInfo { currentGridItem: panelRect.currentGridItem }
 
 
         /*

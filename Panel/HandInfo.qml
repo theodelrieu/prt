@@ -4,16 +4,20 @@ import QtQuick.Layouts 1.5
 import ".."
 import "../Enums"
 
-Item {
+ColumnLayout {
+    Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+    Layout.fillWidth: true
+
     // TODO move in globalstate
     property Item currentGridItem
+
     Loader {
-        sourceComponent: GlobalState.rangeType === RangeType.Base ? baseRangeComp : subrangesComp
+        sourceComponent: currentGridItem ? (GlobalState.rangeType === RangeType.Base ? baseRangeComp : subrangesComp) : null
     }
 
     Component {
             id: baseRangeComp
-            RowLayout {
+            ColumnLayout {
                 Text {
                     text: currentGridItem.handText
                 }
