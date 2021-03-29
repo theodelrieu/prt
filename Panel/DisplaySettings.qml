@@ -7,6 +7,8 @@ import "../Components"
 import ".."
 
 ColumnLayout {
+    visible: GlobalState.rangeLoaded
+
     ButtonGroup {
         id: weightButtonGroup
     }
@@ -63,10 +65,5 @@ ColumnLayout {
     CustomRadioButton {
         text: "Subranges"
         ButtonGroup.group: rangeKindButtonGroup
-    }
-    Rectangle {
-        Layout.fillWidth: true
-        Layout.preferredHeight: 20
-        color:"blue"
     }
 }

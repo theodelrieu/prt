@@ -59,7 +59,6 @@ Rectangle {
         anchors.fill: parent
 
         RowLayout {
-
             Button {
                 enabled: root.interactive
                 Layout.fillWidth: true
@@ -69,7 +68,10 @@ Rectangle {
                     text: "Root"
                 }
 
-                onClicked: stackView.pop(null, StackView.Immediate)
+                onClicked: {
+                    stackView.pop(null, StackView.Immediate)
+                    GlobalState.rangeLoaded = false
+                }
             }
             Button {
                 enabled: root.interactive
@@ -80,7 +82,10 @@ Rectangle {
                     text: "Parent"
                 }
 
-                onClicked: stackView.pop(StackView.Immediate)
+                onClicked: {
+                    stackView.pop(StackView.Immediate)
+                    GlobalState.rangeLoaded = false
+                }
             }
         }
 

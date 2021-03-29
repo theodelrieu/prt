@@ -102,7 +102,6 @@ GridView {
             gridView.currentIndex = -1
         }
         function onRangeLoadedChanged() {
-            console.log("onRangeLoadedChanged:", GlobalState.rangeLoaded)
             if (!GlobalState.rangeLoaded) {
                 gridView.currentIndex = -1
             }

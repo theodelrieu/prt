@@ -7,7 +7,7 @@ import "../Views"
 
 Rectangle {
     id: gridScreen
-    color: "red"
+    color: "#eddcdc"
 
     RangeTreeView {
         id: treeView
@@ -17,21 +17,18 @@ Rectangle {
     Rectangle {
         id: mainRect
         anchors { top: parent.top; bottom: parent.bottom; right: parent.right; left: treeView.right }
-        color: "green"
 
         Rectangle {
             id: gridRect
             width: Math.min(parent.width * 0.8, parent.height)
             height: width
             anchors { top: parent.top; left: parent.left }
-            color: "white"
 
             RangeGridView {
                 id: gridView
             }
         }
         Panel {
-            id: panel
             currentGridItem: gridView.currentItem
             anchors { top: parent.top; bottom: parent.bottom; left: gridRect.right; right: parent.right }
         }
@@ -44,5 +41,6 @@ Rectangle {
             GlobalState.rangeName = name
         }
     }
+
 }
 

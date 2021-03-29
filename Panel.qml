@@ -7,8 +7,6 @@ import "Panel"
 
 Rectangle {
     id: panelRect
-    color: "#eddcdc"
-    visible: GlobalState.rangeLoaded
 
     property Item currentGridItem
     property bool __rangeLoaded: false
@@ -21,23 +19,14 @@ Rectangle {
         DisplaySettings {
             Layout.alignment: Qt.AlignTop | Qt.AlignLeft
             Layout.fillWidth: true
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 20
-                color: "black"
-            }
-        }
-        Rectangle {
-            Layout.fillWidth: true
-            Layout.preferredHeight: 20
-            color: "red"
         }
         Item {
             // spacer item
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Rectangle { anchors.fill: parent; color: "#ffaaaa" } // to visualize the spacer
         }
+    }
+}
 
 
         //b HandInfo { currentGridItem: panelRect.currentGridItem }
@@ -210,6 +199,6 @@ Rectangle {
                     }
                 }
             }
-        }*/
+        }
     }
-}
+}*/
