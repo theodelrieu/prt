@@ -7,9 +7,6 @@ import "../Components"
 import ".."
 
 ColumnLayout {
-    Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-    Layout.fillWidth: true
-
     ButtonGroup {
         id: weightButtonGroup
     }
@@ -66,5 +63,10 @@ ColumnLayout {
     CustomRadioButton {
         text: "Subranges"
         ButtonGroup.group: rangeKindButtonGroup
+    }
+    Rectangle {
+        Layout.fillWidth: true
+        Layout.preferredHeight: 20
+        color:"blue"
     }
 }

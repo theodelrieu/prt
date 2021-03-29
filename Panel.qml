@@ -18,22 +18,29 @@ Rectangle {
         id: layout
         anchors.fill: parent
 
-        DisplaySettings { }
-        Loader {
-            id: loader
-            sourceComponent: currentGridItem ? handInfoComp : null
-            onHeightChanged: { 
-                console.log("loader height:", loader.height)
+        DisplaySettings {
+            Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+            Layout.fillWidth: true
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 20
+                color: "black"
             }
-            onWidthChanged: {
-                console.log("loader width:", loader.width)
-            }
+        }
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 20
+            color: "red"
+        }
+        Item {
+            // spacer item
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Rectangle { anchors.fill: parent; color: "#ffaaaa" } // to visualize the spacer
         }
 
-        Component { 
-            id: handInfoComp
-            HandInfo { currentGridItem: panelRect.currentGridItem }
-        }
+
+        //b HandInfo { currentGridItem: panelRect.currentGridItem }
 
         /*
         Rectangle {
