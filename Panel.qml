@@ -20,6 +20,11 @@ Rectangle {
             Layout.alignment: Qt.AlignTop | Qt.AlignLeft
             Layout.fillWidth: true
         }
+        HandInfo {
+            Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+            Layout.fillWidth: true
+            currentGridItem: panelRect.currentGridItem
+        }
         Item {
             // spacer item
             Layout.fillWidth: true
@@ -29,7 +34,6 @@ Rectangle {
 }
 
 
-        //b HandInfo { currentGridItem: panelRect.currentGridItem }
 
         /*
         Rectangle {
