@@ -59,7 +59,7 @@ ColumnLayout {
     }
 
     onCurrentGridItemChanged: {
-        if (currentGridItem)
+        if (currentGridItem && GlobalState.mode === Mode.View)
             root.state = "gridItemSelected"
         else
             root.state = ""
