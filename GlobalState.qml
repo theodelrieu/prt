@@ -9,4 +9,5 @@ QtObject {
     property int weightType: WeightType.Absolute
     property bool rangeLoaded: false
     property string rangeName
+    property Item currentGridItem
 }

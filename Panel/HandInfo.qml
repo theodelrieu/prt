@@ -7,28 +7,26 @@ import "../Enums"
 ColumnLayout {
     id: root
 
-    // TODO move in globalstate
-    property Item currentGridItem
-
     Loader {
         id: loader
     }
 
     Component {
         id: baseRangeComp
+
         ColumnLayout {
             Text {
                 Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-                text: currentGridItem.handText
+                text: GlobalState.currentGridItem.handText
             }
             RowLayout {
                 Rectangle {
                     Layout.preferredHeight: 30
                     Layout.preferredWidth: 30
-                    color: currentGridItem.baseRange.color
+                    color: GlobalState.currentGridItem.baseRange.color
                 }
                 Text {
-                    text: currentGridItem.baseRange.weight + "%"
+                    text: GlobalState.currentGridItem.baseRange.weight + "%"
                 }
             }
         }
@@ -36,14 +34,15 @@ ColumnLayout {
 
     Component {
         id: subrangesComp
+
         ColumnLayout {
-            property var subranges: currentGridItem.subs
-            property var baseRange: currentGridItem.baseRange
+            property var __subranges: GlobalState.currentGridItem.subs
+            property var __baseRange: GlobalState.currentGridItem.baseRange
             Text {
-                text: currentGridItem.handText
+                text: GlobalState.currentGridItem.handText
             }
             Repeater {
-                model: subranges
+                model: __subranges
                 RowLayout {
                     Rectangle {
                         Layout.preferredHeight: 30
@@ -51,18 +50,22 @@ ColumnLayout {
                         color: modelData.color
                     }
                     Text {
-                        text: modelData.name + ": " + modelData.weight * (GlobalState.weightType === WeightType.Absolute ? baseRange.weight / 100 : 1) + "%"
+                        text: modelData.name + ": " + modelData.weight * (GlobalState.weightType === WeightType.Absolute ? __baseRange.weight / 100 : 1) + "%"
                     }
                 }
             }
         }
     }
 
-    onCurrentGridItemChanged: {
-        if (currentGridItem && GlobalState.mode === Mode.View)
-            root.state = "gridItemSelected"
-        else
-            root.state = ""
+    Connections {
+        target: GlobalState
+
+        function onCurrentGridItemChanged() {
+            if (GlobalState.currentGridItem && (GlobalState.mode === Mode.View || GlobalState.mode === Mode.QuizAnswered))
+                root.state = "gridItemSelected"
+            else
+                root.state = ""
+        }
     }
 
     states: [

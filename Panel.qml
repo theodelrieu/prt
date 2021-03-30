@@ -6,14 +6,9 @@ import "Enums"
 import "Panel"
 
 Rectangle {
-    id: panelRect
-
-    property Item currentGridItem
-    property bool __rangeLoaded: false
-    property bool __quizAnswered: false
+    id: root
 
     ColumnLayout {
-        id: layout
         anchors.fill: parent
 
         DisplaySettings {
@@ -23,7 +18,6 @@ Rectangle {
         HandInfo {
             Layout.alignment: Qt.AlignTop | Qt.AlignLeft
             Layout.fillWidth: true
-            currentGridItem: panelRect.currentGridItem
         }
         Item {
             // spacer item

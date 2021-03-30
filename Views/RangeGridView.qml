@@ -11,7 +11,6 @@ GridView {
     anchors.fill: parent
     cellHeight: parent.height / 13
     cellWidth: cellHeight
-    property bool __quizAnswered: false
 
     model: _rangeDisplayer
     delegate: Rectangle {
@@ -25,7 +24,7 @@ GridView {
         property var baseRange: parentRange
         property int gridIndex: index
         property double deselectedOpacity: 1.0
-        property double selectedOpacity: (GlobalState.mode === Mode.Quiz && __quizAnswered ? 1.0 : 0.4)
+        property double selectedOpacity: (GlobalState.mode === Mode.QuizAnswered ? 1.0 : 0.4)
         property alias handText: handText.text
         property bool __isCurrentItem: GridView.isCurrentItem
 
@@ -35,7 +34,7 @@ GridView {
         Component {
             id: baseRangeComp
             Rectangle {
-                visible: GlobalState.mode === Mode.View || (GlobalState.mode === Mode.Quiz && cell.__isCurrentItem && gridView.__quizAnswered)
+                visible: GlobalState.mode === Mode.View || (GlobalState.mode === Mode.QuizAnswered && cell.__isCurrentItem)
                 width: cell.width
                 height: cell.height * (baseRange.weight / 100)
                 color: baseRange.color
@@ -48,7 +47,7 @@ GridView {
                 Repeater {
                     model: subs
                     Rectangle {
-                        visible: GlobalState.mode === Mode.View || (GlobalState.mode === Mode.Quiz && cell.__isCurrentItem && gridView.__quizAnswered)
+                        visible: GlobalState.mode === Mode.View || (GlobalState.mode === Mode.QuizAnswered && cell.__isCurrentItem)
 
                         property double baseWeight: baseRange.weight / 100
                         width: cell.width
@@ -96,10 +95,16 @@ GridView {
         }
     }
 
+    onCurrentItemChanged: {
+       GlobalState.currentGridItem = gridView.currentItem
+    }
+
     Connections {
         target: GlobalState
         function onModeChanged() {
-            gridView.currentIndex = -1
+            if (GlobalState.mode === Mode.View) {
+                gridView.currentIndex = -1
+            }
         }
         function onRangeLoadedChanged() {
             if (!GlobalState.rangeLoaded) {
@@ -111,13 +116,6 @@ GridView {
         target: _quizer
         function onNewQuiz(idx) {
             gridView.currentIndex = idx
-            gridView.__quizAnswered = false
-        }
-    }
-    Connections {
-        target: _quizer
-        function onAnswered() {
-            gridView.__quizAnswered = true
         }
     }
 }
