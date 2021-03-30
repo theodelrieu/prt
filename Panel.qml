@@ -30,15 +30,6 @@ Rectangle {
 
 
         /*
-        Rectangle {
-            id: handInfoRect
-            color: "purple"
-
-            Loader {
-                id: handInfoLoader
-                sourceComponent: (__rangeLoaded && currentGridItem && (GlobalState.mode === Mode.View || panelRect.__quizAnswered)) ? (baseRangeButton.checked ? baseRangeComp : subrangesComp) : null
-            }
-        }
 
         Rectangle {
             id: quizChoicesRect
