@@ -48,8 +48,11 @@ ColumnLayout {
     Component {
         id: quizNextComp
         Button {
-            id: quizNextButton
+            Layout.alignment: Qt.AlignCenter
+            Layout.preferredWidth: nextText.implicitWidth * 1.5
+            Layout.preferredHeight: nextText.implicitHeight * 1.5
             Text {
+                id: nextText
                 anchors.centerIn: parent
                 text: "Next"
             }
@@ -83,6 +86,7 @@ ColumnLayout {
             PropertyChanges {
                 target: loader
                 sourceComponent: quizChoicesComp
+                Layout.fillWidth: true
             }
         },
         State {
@@ -91,6 +95,7 @@ ColumnLayout {
             PropertyChanges {
                 target: loader
                 sourceComponent: quizNextComp
+                Layout.fillWidth: true
             }
         }
     ]
