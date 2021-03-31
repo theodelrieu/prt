@@ -18,7 +18,6 @@ Rectangle {
             interactive: root.interactive
             model: _rangeTreeModel.rowCount(__rootIndex)
             clip: true
-            snapMode: ListView.SnapToItem
             currentIndex: -1
             highlightMoveDuration: -1
             highlightMoveVelocity: -1

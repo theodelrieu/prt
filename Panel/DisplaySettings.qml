@@ -7,8 +7,6 @@ import "../Components"
 import ".."
 
 ColumnLayout {
-    visible: GlobalState.rangeLoaded
-
     ButtonGroup {
         id: weightButtonGroup
     }
