@@ -11,6 +11,24 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.fillHeight: true
     }
+
+    ListView {
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+        model: _quizSettings
+        delegate: Rectangle {
+            height: 40
+            width: ListView.view.width
+            color: "pink"
+            CheckBox {
+                anchors.centerIn: parent
+                checked: model.value
+                text: model.name
+                onClicked: model.value = (checkState === Qt.Checked)
+            }
+        }
+    }
+
     Button {
         id: quizButton
         Layout.alignment: Qt.AlignBaseline | Qt.AlignHCenter

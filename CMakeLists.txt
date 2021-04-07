@@ -37,6 +37,7 @@ set(PROJECT_SOURCES
         rangeinfo.cpp
         quizer.cpp
         quizchoice.cpp
+        quizsettingsmodel.cpp
 )
 
 qt_add_executable(prt
