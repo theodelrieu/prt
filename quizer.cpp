@@ -37,6 +37,7 @@ void Quizer::stop()
 auto Quizer::nextQuizParams() -> std::tuple<QuizType, HandInfo const*, int>
 {
     // FIXME construct handInfo once (with new)
+    auto const settings = _displayer->quizSettings();
     auto const& handInfo = _displayer->handInfo();
     std::uniform_int_distribution distrib(0, 168);
     auto idx = distrib(_rng);

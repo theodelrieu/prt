@@ -16,5 +16,6 @@
         <file>Screens/GridScreen.qml</file>
         <file>Views/RangeGridView.qml</file>
         <file>Views/RangeTreeView.qml</file>
+        <file>Components/CustomCheckBox.qml</file>
     </qresource>
 </RCC>

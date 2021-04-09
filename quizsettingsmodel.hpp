@@ -20,6 +20,8 @@ public:
     void setSettings(QList<QuizSetting*> const&);
     void appendSetting(QuizSetting*);
 
+    QList<RangeInfo> excludedSubranges() const;
+
     QVariant data(QModelIndex const &idx, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
 

@@ -9,3 +9,5 @@ order of importance
 1. only quiz on X Y Z ranges
 2. quiz type
 3. threshold
+
+move settings from displayer to quizer, restructure QuizSettingsModel, etc

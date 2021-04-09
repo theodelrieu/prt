@@ -4,6 +4,7 @@ import QtQuick.Controls 2.12
 
 import ".."
 import "../Enums"
+import "../Components"
 
 ColumnLayout {
     Item {
@@ -12,16 +13,20 @@ ColumnLayout {
         Layout.fillHeight: true
     }
 
+    Text {
+        text: "Quiz settings"
+    }
+
     ListView {
+        interactive: false
         Layout.fillHeight: true
         Layout.fillWidth: true
         model: _quizSettings
         delegate: Rectangle {
-            height: 40
+            height: 20
             width: ListView.view.width
-            color: "pink"
-            CheckBox {
-                anchors.centerIn: parent
+            CustomCheckBox {
+                anchors { left: parent.left; top: parent.top; bottom: parent.bottom }
                 checked: model.value
                 text: model.name
                 onClicked: model.value = (checkState === Qt.Checked)

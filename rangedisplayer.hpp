@@ -31,6 +31,7 @@ public:
 
     QList<HandInfo> const& handInfo() const;
     Range const* currentRange() const;
+    QuizSettingsModel const* quizSettings() const;
 
 signals:
     void rangeLoaded(QString const&);

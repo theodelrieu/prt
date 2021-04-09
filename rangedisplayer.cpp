@@ -89,3 +89,8 @@ void RangeDisplayer::setRange(QModelIndex const& idx)
     endResetModel();
     emit rangeLoaded(_currentRange->name());
 }
+
+QuizSettingsModel const* RangeDisplayer::quizSettings() const
+{
+    return _quizSettings;
+}

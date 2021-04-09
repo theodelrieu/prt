@@ -60,3 +60,15 @@ QHash<int, QByteArray> QuizSettingsModel::roleNames() const
     names[ValueRole] = "value";
     return names;
 }
+
+QList<RangeInfo> QuizSettingsModel::excludedSubranges() const
+{
+  QList<RangeInfo> ret;
+  for (auto i = 0; i < rowCount(); ++i)
+  {
+      auto setting = static_cast<QuizSetting*>(item(i, 0));
+      // TODO finish it
+
+  }
+  return ret;
+}
