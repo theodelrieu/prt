@@ -1,45 +1,22 @@
 #include "quizsettingsmodel.hpp"
-#include <iostream>
-
-namespace
-{
-class QuizSetting : public QStandardItem
-{
-public:
-    QuizSetting(QString const& name, QString const& type, QVariant const& value): QStandardItem(), _name(name), _type(type), _value(value)
-    {
-
-    }
-
-    QString const& name() const {
-        return _name;
-    }
-
-    QString const& settingType() const {
-        return _type;
-    }
-
-    QVariant const& value() const {
-        return _value;
-    }
-
-    void setValue(QVariant const& v) {
-        _value = v;
-    }
-
-private:
-    QString _name;
-    QString _type;
-    QVariant _value;
-};
-}
 
 QuizSettingsModel::QuizSettingsModel(QObject *parent) : QStandardItemModel(parent)
 {
+}
+
+void QuizSettingsModel::appendSetting(QuizSetting *setting)
+{
+    invisibleRootItem()->appendRow(setting);
+}
+
+void QuizSettingsModel::setSettings(QList<QuizSetting*> const& settings)
+{
+    beginResetModel();
+    clear();
     auto root = invisibleRootItem();
-    root->appendRow(new QuizSetting("test setting 1", "checkbox", true));
-    root->appendRow(new QuizSetting("test setting 2", "checkbox", true));
-    root->appendRow(new QuizSetting("test setting 3", "checkbox", false));
+    for (auto const& setting : qAsConst(settings))
+        root->appendRow(setting);
+    endResetModel();
 }
 
 QVariant QuizSettingsModel::data(QModelIndex const &idx, int role) const

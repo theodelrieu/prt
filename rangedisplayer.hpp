@@ -7,6 +7,7 @@
 
 #include "handinfo.hpp"
 #include "treeviewmodel.hpp"
+#include "quizsettingsmodel.hpp"
 
 class Range;
 
@@ -21,7 +22,9 @@ public:
       LastRole,
     };
 
-    explicit RangeDisplayer(TreeViewModel* treeView, QObject *parent = nullptr);
+    // TODO move in quizer
+    explicit RangeDisplayer(TreeViewModel* treeView, QuizSettingsModel* settings, QObject *parent = nullptr);
+    ~RangeDisplayer();
 
     QVariant data(QModelIndex const&, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
@@ -40,6 +43,7 @@ private:
     QModelIndex _lastTreeIndex;
     QList<HandInfo> _handInfo;
     Range* _currentRange;
+    QuizSettingsModel* _quizSettings;
 };
 
 #endif // RANGEDISPLAYER_HPP

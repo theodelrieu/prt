@@ -18,10 +18,11 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     auto tree = new TreeViewModel;
     auto loader = new RangeLoader(tree);
-    auto displayer = new RangeDisplayer(tree);
-    auto quizer = new Quizer(displayer);
-    // TODO construct in quizer
+    // TODO construct in quizer?
     auto quizSettings = new QuizSettingsModel;
+    auto displayer = new RangeDisplayer(tree, quizSettings);
+    auto quizer = new Quizer(displayer);
+
 
     qmlRegisterUncreatableType<TreeViewModel>("RangeTreeModel", 1, 0, "TreeViewModel", "");
     qmlRegisterUncreatableType<RangeLoader>("RangeLoader", 1, 0, "RangeLoader", "");

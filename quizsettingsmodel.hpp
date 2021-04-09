@@ -2,6 +2,8 @@
 #define QUIZSETTINGSMODEL_HPP
 
 #include <QStandardItemModel>
+#include "quizsetting.hpp"
+#include "range.hpp"
 
 class QuizSettingsModel : public QStandardItemModel
 {
@@ -15,11 +17,13 @@ public:
 
     explicit QuizSettingsModel(QObject *parent = nullptr);
 
+    void setSettings(QList<QuizSetting*> const&);
+    void appendSetting(QuizSetting*);
+
     QVariant data(QModelIndex const &idx, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
+
     bool setData(QModelIndex const& idx, QVariant const& v, int role) override;
-
-
 };
 
 #endif // QUIZSETTINGSMODEL_HPP

@@ -38,6 +38,7 @@ set(PROJECT_SOURCES
         quizer.cpp
         quizchoice.cpp
         quizsettingsmodel.cpp
+        quizsetting.cpp
 )
 
 qt_add_executable(prt
