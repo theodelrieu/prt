@@ -2,19 +2,6 @@
 #include "range.hpp"
 #include "quizsetting.hpp"
 
-namespace
-{
-QList<QuizSetting*> settingsFromRange(Range const* range)
-{
-    QList<QuizSetting*> ret;
-
-    auto subrangeInfo = range->subrangeInfo();
-    for (auto const& info : qAsConst(subrangeInfo))
-        ret.append(new QuizSetting(info.name(), "checkbox", true));
-    return ret;
-}
-}
-
 RangeDisplayer::RangeDisplayer(TreeViewModel* treeView, QuizSettingsModel* settings, QObject *parent) : QStandardItemModel(parent), _treeView(treeView), _handInfo(emptyHandInfo()), _quizSettings(settings)
 {
     auto root = invisibleRootItem();
@@ -84,7 +71,7 @@ void RangeDisplayer::setRange(QModelIndex const& idx)
     auto root = invisibleRootItem();
     for (auto const& elem : qAsConst(_handInfo))
         root->appendRow(new HandInfo(elem));
-    _quizSettings->setSettings(settingsFromRange(_currentRange));
+    _quizSettings->setRange(_currentRange);
 
     endResetModel();
     emit rangeLoaded(_currentRange->name());

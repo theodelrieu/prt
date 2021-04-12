@@ -10,7 +10,7 @@ Quizer::Quizer(RangeDisplayer* displayer, QObject *parent) : QObject(parent), _d
 
 void Quizer::start()
 {
-   nextQuiz();
+    nextQuiz();
 }
 
 void Quizer::next()
@@ -37,6 +37,7 @@ void Quizer::stop()
 auto Quizer::nextQuizParams() -> std::tuple<QuizType, HandInfo const*, int>
 {
     // FIXME construct handInfo once (with new)
+    // TODO refactor this mess of a file
     auto const settings = _displayer->quizSettings();
     auto const& handInfo = _displayer->handInfo();
     std::uniform_int_distribution distrib(0, 168);
@@ -44,8 +45,22 @@ auto Quizer::nextQuizParams() -> std::tuple<QuizType, HandInfo const*, int>
     // no subranges, simply quiz about the parent range
     if (_displayer->currentRange()->subrangeInfo().empty())
         return {QuizType::InBaseRange, std::addressof(handInfo[idx]), idx};
-    while (handInfo[idx].parentRange().weight() == 0)
-        idx = distrib(_rng);
+    auto const excludedSubranges = settings->excludedSubranges();
+
+    for (;; idx = distrib(_rng))
+    {
+        if (handInfo[idx].parentRange().weight() == 0)
+            continue;
+        auto const& subranges = handInfo[idx].subranges();
+        auto pred = [&](auto const& excluded) {
+            return std::find_if(subranges.begin(), subranges.end(), [&](auto const& sub) {
+                return sub.color() == excluded.color() && sub.name() == excluded.name();
+            }) != subranges.end();
+        };
+        if (std::any_of(excludedSubranges.begin(), excludedSubranges.end(), pred))
+            continue;
+        break;
+    }
     std::uniform_int_distribution quizTypeDistrib(0, 1);
     return {static_cast<QuizType>(quizTypeDistrib(_rng)), std::addressof(handInfo[idx]), idx};
 }
@@ -57,7 +72,7 @@ void Quizer::nextInSubrangeQuiz(HandInfo const* hand, int handIndex)
     auto const subrangeIndex = distrib(_rng);
     auto const& subrange = subrangeInfo.at(subrangeIndex);
     auto const hasSubrange = std::any_of(hand->subranges().begin(), hand->subranges().end(),
-                     [&](auto const& sub){ return sub.name() == subrange.name() && sub.color() == subrange.color(); });
+                                         [&](auto const& sub){ return sub.name() == subrange.name() && sub.color() == subrange.color(); });
     auto const question = QString("Is <b>%1</b> in the <font color=\"%2\"><b>%3</b></font> range?")
             .arg(hand->name(), subrange.color().name(), subrange.name());
     QList<QuizChoice> choices{QuizChoice{"Yes"}, QuizChoice{"No"}};
@@ -69,12 +84,12 @@ void Quizer::nextMostPlayedQuiz(HandInfo const *hand, int handIndex)
 {
     auto const& subrangeInfo = _displayer->currentRange()->subrangeInfo();
     auto subrangeIt = std::max_element(hand->subranges().begin(), hand->subranges().end(),
-                   [&](auto const& lhs, auto const& rhs){ return lhs.weight() < rhs.weight(); });
+                                       [&](auto const& lhs, auto const& rhs){ return lhs.weight() < rhs.weight(); });
     // TODO throw?
     if (subrangeIt == hand->subranges().end())
         return;
     auto subrangeIndexIt = std::find_if(subrangeInfo.begin(), subrangeInfo.end(),
-                                      [&](auto const& elem) { return subrangeIt->name() == elem.name() && subrangeIt->color() == elem.color(); });
+                                        [&](auto const& elem) { return subrangeIt->name() == elem.name() && subrangeIt->color() == elem.color(); });
     if (subrangeIndexIt == subrangeInfo.end())
         return;
     _correctAnswerButtonIndex = std::distance(subrangeInfo.begin(), subrangeIndexIt);
@@ -88,14 +103,14 @@ void Quizer::nextMostPlayedQuiz(HandInfo const *hand, int handIndex)
 void Quizer::nextQuiz()
 {
     auto const [quizType, handInfo, handIndex] = nextQuizParams();
-    nextInSubrangeQuiz(handInfo, handIndex);
+            nextInSubrangeQuiz(handInfo, handIndex);
 
-    switch (quizType) {
-    case QuizType::InBaseRange:
-        return;
-    case QuizType::InSubrange:
-        nextInSubrangeQuiz(handInfo, handIndex);
-    case QuizType::MostPlayed:
-        nextMostPlayedQuiz(handInfo, handIndex);
+            switch (quizType) {
+        case QuizType::InBaseRange:
+            return;
+        case QuizType::InSubrange:
+            nextInSubrangeQuiz(handInfo, handIndex);
+        case QuizType::MostPlayed:
+            nextMostPlayedQuiz(handInfo, handIndex);
     }
 }

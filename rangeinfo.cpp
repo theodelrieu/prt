@@ -19,3 +19,13 @@ double RangeInfo::weight() const
 {
     return _weight;
 }
+
+bool operator==(RangeInfo const& lhs, RangeInfo const& rhs)
+{
+   return lhs.name() == rhs.name() && lhs.color() == rhs.color() && lhs.weight() == rhs.weight();
+}
+
+bool operator!=(RangeInfo const& lhs, RangeInfo const& rhs)
+{
+    return !(lhs == rhs);
+}

@@ -17,8 +17,7 @@ public:
 
     explicit QuizSettingsModel(QObject *parent = nullptr);
 
-    void setSettings(QList<QuizSetting*> const&);
-    void appendSetting(QuizSetting*);
+    void setRange(Range const*);
 
     QList<RangeInfo> excludedSubranges() const;
 
@@ -26,6 +25,9 @@ public:
     QHash<int, QByteArray> roleNames() const override;
 
     bool setData(QModelIndex const& idx, QVariant const& v, int role) override;
+
+private:
+    Range const* _range;
 };
 
 #endif // QUIZSETTINGSMODEL_HPP

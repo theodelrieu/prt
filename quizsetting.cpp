@@ -1,12 +1,8 @@
 #include "quizsetting.hpp"
 
-QuizSetting::QuizSetting(QString const& name, QString const& type, QVariant const& value): QStandardItem(), _name(name), _type(type), _value(value)
+QuizSetting::QuizSetting(QString const& text, QVariant const& payload, QString const& type, QVariant const& value): QStandardItem(), _payload(payload), _type(type), _value(value)
 {
-
-}
-
-QString const& QuizSetting::name() const {
-    return _name;
+    setText(text);
 }
 
 QString const& QuizSetting::settingType() const {
@@ -15,6 +11,10 @@ QString const& QuizSetting::settingType() const {
 
 QVariant const& QuizSetting::value() const {
     return _value;
+}
+
+QVariant const& QuizSetting::payload() const {
+    return _payload;
 }
 
 void QuizSetting::setValue(QVariant const& v) {

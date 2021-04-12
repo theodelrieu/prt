@@ -1,59 +1,54 @@
+
 #include "quizsettingsmodel.hpp"
 
-QuizSettingsModel::QuizSettingsModel(QObject *parent) : QStandardItemModel(parent)
+QuizSettingsModel::QuizSettingsModel(QObject *parent)
+    : QStandardItemModel(parent)
 {
 }
 
-void QuizSettingsModel::appendSetting(QuizSetting *setting)
+void QuizSettingsModel::setRange(Range const* range)
 {
-    invisibleRootItem()->appendRow(setting);
-}
-
-void QuizSettingsModel::setSettings(QList<QuizSetting*> const& settings)
-{
+    _range = range;
     beginResetModel();
     clear();
     auto root = invisibleRootItem();
-    for (auto const& setting : qAsConst(settings))
-        root->appendRow(setting);
+    auto const subranges = _range->subrangeInfo();
+    if (!subranges.empty())
+    {
+        // TODO 1 setting group per row (QuizSettingGroup object?)
+        for (auto const& sub : qAsConst(subranges))
+            root->appendRow(new QuizSetting(sub.name(), QVariant::fromValue(sub), "checkbox", false));
+    }
     endResetModel();
 }
 
-QVariant QuizSettingsModel::data(QModelIndex const &idx, int role) const
-{
-    if (!idx.isValid())
-        return {};
-    if (role < NameRole || role >= LastRole)
-        return {};
-    auto item = dynamic_cast<QuizSetting*>(itemFromIndex(idx));
-    if (!item)
-        return {};
-    switch (role)
-    {
-    case NameRole:
-        return item->name();
-    case TypeRole:
-         return item->settingType();
-    case ValueRole:
-        return item->value();
-    default:
-        return {};
+QVariant QuizSettingsModel::data(QModelIndex const &idx, int role) const {
+    if (!idx.isValid()) return {};
+    if (role < NameRole || role >= LastRole) return {};
+    auto item = dynamic_cast<QuizSetting *>(itemFromIndex(idx));
+    if (!item) return {};
+    switch (role) {
+        case NameRole:
+            return item->text();
+        case TypeRole:
+            return item->settingType();
+        case ValueRole:
+            return item->value();
+        default:
+            return {};
     }
 }
 
-bool QuizSettingsModel::setData(QModelIndex const &idx, QVariant const &v, int role)
-{
-    if (role != ValueRole)
-        return false;
-    auto item = dynamic_cast<QuizSetting*>(itemFromIndex(idx));
-    if (!item)
-        return false;
+bool QuizSettingsModel::setData(QModelIndex const &idx, QVariant const &v,
+                                int role) {
+    if (role != ValueRole) return false;
+    auto item = dynamic_cast<QuizSetting *>(itemFromIndex(idx));
+    if (!item) return false;
     item->setValue(v);
     return true;
 }
 
-QHash<int, QByteArray> QuizSettingsModel::roleNames() const
-{
+QHash<int, QByteArray> QuizSettingsModel::roleNames() const {
     QHash<int, QByteArray> names;
     names[NameRole] = "name";
     names[TypeRole] = "type";
@@ -61,14 +56,12 @@ QHash<int, QByteArray> QuizSettingsModel::roleNames() const
     return names;
 }
 
-QList<RangeInfo> QuizSettingsModel::excludedSubranges() const
-{
-  QList<RangeInfo> ret;
-  for (auto i = 0; i < rowCount(); ++i)
-  {
-      auto setting = static_cast<QuizSetting*>(item(i, 0));
-      // TODO finish it
-
-  }
-  return ret;
+QList<RangeInfo> QuizSettingsModel::excludedSubranges() const {
+    QList<RangeInfo> ret;
+    for (auto i = 0; i < rowCount(); ++i) {
+        auto setting = static_cast<QuizSetting *>(item(i, 0));
+        if (setting->value().value<bool>())
+            ret.append(setting->payload().value<RangeInfo>());
+    }  
+    return ret;
 }

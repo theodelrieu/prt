@@ -26,6 +26,9 @@ private:
     double _weight;
 };
 
+bool operator==(RangeInfo const&, RangeInfo const&);
+bool operator!=(RangeInfo const&, RangeInfo const&);
+
 Q_DECLARE_METATYPE(RangeInfo)
 
 #endif // RANGEINFO_HPP
