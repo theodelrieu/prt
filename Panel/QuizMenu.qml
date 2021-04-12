@@ -14,11 +14,16 @@ ColumnLayout {
     }
 
     Text {
-        text: "Quiz settings"
+        text: "Do not quiz hands which are 100% in the range"
+        Layout.fillWidth: true
+        wrapMode: Text.Wrap
+        // TODO move this object + listview in a QuizSettings object later on
+        visible: GlobalState.mode === Mode.View
     }
 
     ListView {
         interactive: false
+        visible: GlobalState.mode === Mode.View
         Layout.fillHeight: true
         Layout.fillWidth: true
         model: _quizSettings

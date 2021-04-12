@@ -1,6 +1,7 @@
 #include "quizer.hpp"
 #include "range.hpp"
 
+#include <iostream>
 inline auto constexpr correctAnswerText = "<font color=\"green\"><b>Correct!</b></font>";
 inline auto constexpr wrongAnswerText = "<font color=\"red\"><b>Wrong!</b></font>";
 
@@ -38,10 +39,16 @@ void Quizer::start()
             if (hand.parentRange().weight() == 0)
                 return true;
             auto const& subranges = hand.subranges();
-            return std::find_if(subranges.begin(), subranges.end(), [&](auto const& sub) {
+            auto it = std::find_if(subranges.begin(), subranges.end(), [&](auto const& sub) {
                 // TODO use == when weight is moved out of RangeInfo
                 return sub.name() == excluded.name() && sub.color() == excluded.color();
-            }) != subranges.end();
+            });
+            if (it != subranges.end())
+            {
+                std::cout << "Hand: " << hand.name().toStdString() << " Weight: " << it->weight() <<  std::endl;
+                return it->weight() == 100;
+            }
+            return false;
         }),
                     _quizHands.end());
     }

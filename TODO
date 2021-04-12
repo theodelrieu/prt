@@ -18,8 +18,4 @@ each setting group has several rows (actual QuizSetting object)
 
 rework incomplete model RangeInfo (weight is error-prone and should not be in the model(?))
 
-forbid excluding all the ranges (or infinite loop might ensue)
-
 add QuizSettingGroup
-
-do not while(true) when randomizing hand, abort quiz with new signal (invalidsettings or smth)
