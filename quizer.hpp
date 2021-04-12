@@ -5,6 +5,7 @@
 
 #include <tuple>
 #include <random>
+#include <vector>
 #include "rangedisplayer.hpp"
 #include "quizchoice.hpp"
 
@@ -18,7 +19,8 @@ public:
         MostPlayed,
     };
 
-    explicit Quizer(RangeDisplayer*, QObject *parent = nullptr);
+    // TODO stop passing RangeDisplayer, add a setRange and connect objects in main
+    explicit Quizer(RangeDisplayer const*, QObject *parent = nullptr);
 
 public slots:
     void start();
@@ -37,8 +39,9 @@ private:
     void nextMostPlayedQuiz(HandInfo const*, int);
     std::tuple<QuizType, HandInfo const*, int> nextQuizParams();
 
-    RangeDisplayer* _displayer;
+    RangeDisplayer const* _displayer;
     std::mt19937 _rng;
+    std::vector<HandInfo> _quizHands;
     int _correctAnswerButtonIndex{};
     int _succeededAttempts{};
     int _totalAttempts{};
