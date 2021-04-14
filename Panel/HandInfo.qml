@@ -9,6 +9,7 @@ ColumnLayout {
 
     Loader {
         id: loader
+        visible: GlobalState.mode === Mode.View || GlobalState.mode === Mode.QuizAnswered
     }
 
     Component {
@@ -61,7 +62,7 @@ ColumnLayout {
         target: GlobalState
 
         function onCurrentGridItemChanged() {
-            if (GlobalState.currentGridItem && (GlobalState.mode === Mode.View || GlobalState.mode === Mode.QuizAnswered))
+            if (GlobalState.currentGridItem)
                 root.state = "gridItemSelected"
             else
                 root.state = ""

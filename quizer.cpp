@@ -28,7 +28,6 @@ void Quizer::start()
     auto const settings = _displayer->quizSettings();
     auto handInfo = _displayer->handInfo();
 
-    _quizHands.clear();
     _quizHands.insert(_quizHands.end(), handInfo.begin(), handInfo.end());
 
     auto const excludedSubranges = settings->excludedSubranges();
@@ -44,10 +43,7 @@ void Quizer::start()
                 return sub.name() == excluded.name() && sub.color() == excluded.color();
             });
             if (it != subranges.end())
-            {
-                std::cout << "Hand: " << hand.name().toStdString() << " Weight: " << it->weight() <<  std::endl;
                 return it->weight() == 100;
-            }
             return false;
         }),
                     _quizHands.end());
@@ -79,6 +75,7 @@ void Quizer::stop()
 {
     _totalAttempts = 0;
     _succeededAttempts = 0;
+    _quizHands.clear();
 }
 
 auto Quizer::nextQuizParams() -> std::tuple<QuizType, HandInfo const*, int>
