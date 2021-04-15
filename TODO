@@ -19,3 +19,5 @@ each setting group has several rows (actual QuizSetting object)
 rework incomplete model RangeInfo (weight is error-prone and should not be in the model(?))
 
 add QuizSettingGroup
+
+QuizSettingGroupModel contains a list of QuizSettingGroup, each contains a QuizSettingModel
