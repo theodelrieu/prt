@@ -34,7 +34,7 @@ ColumnLayout {
                 anchors { left: parent.left; top: parent.top; bottom: parent.bottom }
                 checked: model.value
                 text: model.name
-                onClicked: model.value = (checkState === Qt.Checked)
+                onCheckedChanged: model.value = (checkState === Qt.Checked)
             }
         }
     }

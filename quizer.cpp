@@ -31,6 +31,7 @@ void Quizer::start()
     _quizHands.insert(_quizHands.end(), handInfo.begin(), handInfo.end());
 
     auto const excludedSubranges = settings->excludedSubranges();
+    std::cout << "EXCLUDED NB: " << excludedSubranges.size() << std::endl;
     for (auto const& excluded : qAsConst(excludedSubranges))
     {
         _quizHands.erase(
@@ -50,8 +51,16 @@ void Quizer::start()
     }
     if (_quizHands.empty())
     {
+        std::cout << "EMPTY HANDS" << std::endl;
+
         // TODO emit error
         return;
+    }
+    for (auto const& hand : _quizHands)
+    {
+        auto fold = std::find_if(hand.subranges().begin(), hand.subranges().end(), [](auto const& sub) { return sub.name() == "Fold";});
+        if (fold != hand.subranges().end())
+            std::cout << hand.name().toStdString() << ": Fold " << fold->weight() << std::endl;
     }
     nextQuiz();
 }
@@ -73,6 +82,7 @@ void Quizer::answer(int buttonIndex)
 
 void Quizer::stop()
 {
+    std::cout << "stop called" << std::endl;
     _totalAttempts = 0;
     _succeededAttempts = 0;
     _quizHands.clear();
