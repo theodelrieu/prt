@@ -18,6 +18,7 @@ each setting group has several rows (actual QuizSetting object)
 
 rework incomplete model RangeInfo (weight is error-prone and should not be in the model(?))
 
-add QuizSettingGroup
-
-QuizSettingGroupModel contains a list of QuizSettingGroup, each contains a QuizSettingModel
+add QuizSettingGroupModel, which holds QuizSettingGroup objects in its rows.
+roles are text, settings
+settings role return a list of QuizSettingModel (casted to QVariant c.f. https://stackoverflow.com/questions/14103402/qt-model-within-a-model)
+which then has text, value, type roles

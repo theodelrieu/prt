@@ -90,7 +90,7 @@ void Quizer::stop()
 
 auto Quizer::nextQuizParams() -> std::tuple<QuizType, HandInfo const*, int>
 {
-    std::uniform_int_distribution<int> distrib(0, _quizHands.size());
+    std::uniform_int_distribution<int> distrib(0, _quizHands.size() - 1);
     auto const idx = distrib(_rng);
     auto const& hand = _quizHands[idx];
     auto const gridIdx = indexOfHandInGrid(hand);
