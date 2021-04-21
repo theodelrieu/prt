@@ -1,0 +1,11 @@
+[requires]
+boost/1.75.0
+icu/68.2
+
+[generators]
+cmake_find_package
+cmake_paths
+
+[options]
+boost:without_locale=True
+boost:without_log=True
