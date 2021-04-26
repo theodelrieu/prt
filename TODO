@@ -18,6 +18,5 @@ each setting group has several rows (actual QuizSetting object)
 
 rework incomplete model RangeInfo (weight is error-prone and should not be in the model(?))
 
-
-Add QuizSettingModel, make it rows of QuizSettingGroupModel 
-QSGM "settings" role return a list of QuizSettingModel (casted to QVariant c.f. https://stackoverflow.com/questions/14103402/qt-model-within-a-model)
+Keep QuizSettingGroupModel, which will contain every setting group.
+Then add properties on QuizSetting, and return a QList<QuizSetting*> for role settings in QuizSettingGroupModel
