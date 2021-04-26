@@ -1,6 +1,6 @@
 #include "quizsetting.hpp"
 
-QuizSetting::QuizSetting(QString const& text, QVariant const& payload, QString const& type, QVariant const& value): QStandardItem(), _payload(payload), _type(type), _value(value)
+QuizSetting::QuizSetting(QString const& text, QVariant const& payload, QString const& type, QVariant const& value, QObject* parent): QObject(parent), QStandardItem(), _payload(payload), _type(type), _value(value)
 {
     setText(text);
 }

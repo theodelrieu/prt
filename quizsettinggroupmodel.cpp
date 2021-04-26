@@ -10,16 +10,15 @@ void QuizSettingGroupModel::setRange(Range const *range) {
   clear();
   auto root = invisibleRootItem();
   auto const subranges = _range->subrangeInfo();
-  // TODO 1 setting group per row (QuizSettingGroup object)
-  // if (!subranges.empty()) {
-  //   QList<QStandardItem *> items;
-  //   items.append(new QStandardItem("Some stuff about 100% ranges"));
-  //   for (auto const &sub : qAsConst(subranges)) {
-  //     items.append(new QuizSetting(sub.name(), QVariant::fromValue(sub),
-  //                                  "checkbox", false));
-  //   }
-  //   root->appendRow(items);
-  // }
+  if (!subranges.empty()) {
+    QList<QStandardItem *> items;
+    items.append(new QStandardItem("Some stuff about 100% ranges"));
+    for (auto const &sub : qAsConst(subranges)) {
+      items.append(new QuizSetting(sub.name(), QVariant::fromValue(sub),
+                                   "checkbox", false));
+    }
+    root->appendRow(items);
+  }
   endResetModel();
 }
 
@@ -41,6 +40,15 @@ QHash<int, QByteArray> QuizSettingGroupModel::roleNames() const {
   names[NameRole] = "name";
   names[SettingsRole] = "settings";
   return names;
+}
+
+QList<QuizSetting*> QuizSettingGroupModel::settings() const {
+  QList<QuizSetting*> ret;
+  for (auto i = 0; i < rowCount(); ++i) {
+    auto const item = itemFromIndex(index(i, 1));
+    ret.append(static_cast<QuizSetting*>(item));
+  }
+  return ret;
 }
 
 QList<RangeInfo> QuizSettingGroupModel::excludedSubranges() const {

@@ -19,6 +19,7 @@ class QuizSettingGroupModel : public QStandardItemModel {
   void setRange(Range const*);
 
   QList<RangeInfo> excludedSubranges() const;
+  QList<QuizSetting*> settings() const;
 
   QVariant data(QModelIndex const& idx, int role) const override;
   QHash<int, QByteArray> roleNames() const override;

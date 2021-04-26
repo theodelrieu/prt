@@ -3,10 +3,14 @@
 
 #include <QStandardItem>
 
-class QuizSetting : public QStandardItem
+class QuizSetting : public QStandardItem, public QObject
 {
+    Q_OBJECT
+    Q_PROPERTY(QString type READ settingType)
+    Q_PROPERTY(QVariant value READ value WRITE setValue)
+    Q_PROPERTY(QString text READ text)
 public:
-    QuizSetting(QString const& text, QVariant const& payload, QString const& type, QVariant const& value);
+    QuizSetting(QString const& text, QVariant const& payload, QString const& type, QVariant const& value, QObject *parent = nullptr);
 
     QString const& settingType() const;
     QVariant const& value() const;
@@ -15,7 +19,6 @@ public:
     void setValue(QVariant const& v);
 
 private:
-    QString _name;
     QVariant _payload;
     QString _type;
     QVariant _value;
