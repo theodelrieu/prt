@@ -1,17 +1,16 @@
-#ifndef QUIZSETTINGMODEL_HPP
-#define QUIZSETTINGMODEL_HPP
+#ifndef QUIZSETTINGGROUPMODEL_HPP
+#define QUIZSETTINGGROUPMODEL_HPP
 
 #include <QStandardItemModel>
 
 #include "quizsetting.hpp"
 #include "range.hpp"
 
-class QuizSettingModel : public QStandardItemModel {
+class QuizSettingGroupModel : public QStandardItemModel {
  public:
   enum Roles {
     NameRole = Qt::UserRole + 1,
-    TypeRole,
-    ValueRole,
+    SettingsRole,
     LastRole,
   };
 
@@ -24,10 +23,8 @@ class QuizSettingModel : public QStandardItemModel {
   QVariant data(QModelIndex const& idx, int role) const override;
   QHash<int, QByteArray> roleNames() const override;
 
-  bool setData(QModelIndex const& idx, QVariant const& v, int role) override;
-
  private:
   Range const* _range;
 };
 
-#endif  // QUIZSETTINGMODEL_HPP
+#endif  // QUIZSETTINGGROUPMODEL_HPP
