@@ -26,7 +26,7 @@ ColumnLayout {
         visible: GlobalState.mode === Mode.View
         Layout.fillHeight: true
         Layout.fillWidth: true
-        model: _quizSettings
+        model: _quizSetting
         delegate: Rectangle {
             height: 20
             width: ListView.view.width

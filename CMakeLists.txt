@@ -26,7 +26,7 @@ set(PROJECT_SOURCES
         rangeinfo.cpp
         quizer.cpp
         quizchoice.cpp
-        quizsettingsmodel.cpp
+        quizsettingmodel.cpp
         quizsetting.cpp
 )
 

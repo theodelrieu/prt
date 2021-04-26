@@ -3,7 +3,7 @@
 #include <QQmlContext>
 #include <QtPlugin>
 #include <quizer.hpp>
-#include <quizsettingsmodel.hpp>
+#include <quizsettingmodel.hpp>
 #include <rangedisplayer.hpp>
 #include <rangeloader.hpp>
 #include <treeviewmodel.hpp>
@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
   auto tree = new TreeViewModel;
   auto loader = new RangeLoader(tree);
   // TODO construct in quizer?
-  auto quizSettings = new QuizSettingsModel;
+  auto quizSettings = new QuizSettingModel;
   auto displayer = new RangeDisplayer(tree, quizSettings);
   auto quizer = new Quizer(displayer);
 
@@ -45,8 +45,8 @@ int main(int argc, char *argv[]) {
   qmlRegisterUncreatableType<RangeDisplayer>("RangeDisplayer", 1, 0,
                                              "RangeDisplayer", "");
   qmlRegisterUncreatableType<Quizer>("Quizer", 1, 0, "Quizer", "");
-  qmlRegisterUncreatableType<QuizSettingsModel>("QuizSettingsModel", 1, 0,
-                                                "QuizSettingsModel", "");
+  qmlRegisterUncreatableType<QuizSettingModel>("QuizSettingModel", 1, 0,
+                                               "QuizSettingModel", "");
   engine.rootContext()->setContextProperty("_rangeTreeModel", tree);
   engine.rootContext()->setContextProperty("_rangeLoader", loader);
   engine.rootContext()->setContextProperty("_rangeDisplayer", displayer);
