@@ -19,4 +19,5 @@ each setting group has several rows (actual QuizSetting object)
 rework incomplete model RangeInfo (weight is error-prone and should not be in the model(?))
 
 Keep QuizSettingGroupModel, which will contain every setting group.
+Add QuizSettingModel, which is at column 1 of QuizSettingGroupModel, and holds a list of settings
 Then add properties on QuizSetting, and return a QList<QuizSetting*> for role settings in QuizSettingGroupModel

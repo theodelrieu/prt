@@ -33,6 +33,7 @@ ColumnLayout {
           Text {
             text: name
           }
+          Component.onCompleted: console.log(name, settings)
           Column {
             Repeater {
               model: settings

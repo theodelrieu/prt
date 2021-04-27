@@ -1,6 +1,8 @@
 
 #include "quizsettinggroupmodel.hpp"
 
+#include <iostream>
+
 QuizSettingGroupModel::QuizSettingGroupModel(QObject *parent)
     : QStandardItemModel(parent) {}
 
@@ -18,6 +20,9 @@ void QuizSettingGroupModel::setRange(Range const *range) {
                                    "checkbox", false));
     }
     root->appendRow(items);
+
+    std::cout << "root.columnCount: " << root->columnCount() << std::endl;
+    std::cout << "root.rowCount: " << root->rowCount() << std::endl;
   }
   endResetModel();
 }
@@ -47,6 +52,7 @@ QList<QVariant> QuizSettingGroupModel::settings(QModelIndex const &idx) const {
   auto const group = itemFromIndex(idx);
   if (!group) return {};
 
+  std::cout << "columnCount: " << group->columnCount() << std::endl;
   for (auto i = 1; i < group->columnCount(); ++i) {
     auto const item = itemFromIndex(index(idx.row(), i));
     ret.append(QVariant::fromValue(static_cast<QuizSetting *>(item)));
@@ -56,6 +62,8 @@ QList<QVariant> QuizSettingGroupModel::settings(QModelIndex const &idx) const {
 
 QString QuizSettingGroupModel::groupText(QModelIndex const &idx) const {
   auto const group = itemFromIndex(idx);
+  std::cout << "idx.row: " << idx.row() << " column: " << idx.column()
+            << std::endl;
   if (!group) return {};
   return itemFromIndex(index(idx.row(), 0))->text();
 }
