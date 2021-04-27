@@ -3,7 +3,7 @@
 #include <QQmlContext>
 #include <QtPlugin>
 #include <quizer.hpp>
-#include <quizsettingmodel.hpp>
+#include <quizsettinggroupmodel.hpp>
 #include <rangedisplayer.hpp>
 #include <rangeloader.hpp>
 #include <treeviewmodel.hpp>

@@ -23,12 +23,12 @@ Quizer::Quizer(RangeDisplayer const* displayer, QObject* parent)
     : QObject(parent), _displayer(displayer), _rng(std::random_device{}()) {}
 
 void Quizer::start() {
-  auto const setting = _displayer->quizSetting();
+  auto const settings = _displayer->quizSettings();
   auto handInfo = _displayer->handInfo();
 
   _quizHands.insert(_quizHands.end(), handInfo.begin(), handInfo.end());
 
-  auto const excludedSubranges = setting->excludedSubranges();
+  auto const excludedSubranges = settings->excludedSubranges();
   for (auto const& excluded : qAsConst(excludedSubranges)) {
     _quizHands.erase(
         std::remove_if(_quizHands.begin(), _quizHands.end(),

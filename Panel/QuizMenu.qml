@@ -22,20 +22,33 @@ ColumnLayout {
     // }
 
     ListView {
-        interactive: false
         visible: GlobalState.mode === Mode.View
         Layout.fillHeight: true
         Layout.fillWidth: true
-        model: _quizSetting
+        model: _quizSettings
+        // TODO column layout?
         delegate: Rectangle {
-            height: 20
-            width: ListView.view.width
-            CustomCheckBox {
-                anchors { left: parent.left; top: parent.top; bottom: parent.bottom }
-                checked: model.value
-                text: model.name
-                onCheckedChanged: model.value = (checkState === Qt.Checked)
+          height: ListView.view.height
+          width: ListView.view.width
+          Text {
+            text: name
+          }
+          Column {
+            Repeater {
+              model: settings
+              delegate: Rectangle {
+              height: 20
+              width: ListView.view.width
+                // FIXME loader for different types of settings
+                CustomCheckBox {
+                    anchors { left: parent.left; top: parent.top; bottom: parent.bottom }
+                    checked: modelData.value
+                    text: modelData.name
+                    onCheckedChanged: modelData.value = (checkState === Qt.Checked)
+                }
+              }
             }
+          }
         }
     }
 

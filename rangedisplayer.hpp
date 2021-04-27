@@ -6,7 +6,7 @@
 #include <QStandardItemModel>
 
 #include "handinfo.hpp"
-#include "quizsettingmodel.hpp"
+#include "quizsettinggroupmodel.hpp"
 #include "treeviewmodel.hpp"
 
 class Range;
@@ -22,7 +22,8 @@ class RangeDisplayer : public QStandardItemModel {
   };
 
   // TODO move in quizer
-  explicit RangeDisplayer(TreeViewModel* treeView, QuizSettingModel* setting,
+  explicit RangeDisplayer(TreeViewModel* treeView,
+                          QuizSettingGroupModel* settings,
                           QObject* parent = nullptr);
   ~RangeDisplayer();
 
@@ -31,7 +32,7 @@ class RangeDisplayer : public QStandardItemModel {
 
   QList<HandInfo> const& handInfo() const;
   Range const* currentRange() const;
-  QuizSettingModel const* quizSetting() const;
+  QuizSettingGroupModel const* quizSettings() const;
 
  signals:
   void rangeLoaded(QString const&);
@@ -44,7 +45,7 @@ class RangeDisplayer : public QStandardItemModel {
   QModelIndex _lastTreeIndex;
   QList<HandInfo> _handInfo;
   Range* _currentRange;
-  QuizSettingModel* _quizSetting;
+  QuizSettingGroupModel* _quizSettings;
 };
 
 #endif  // RANGEDISPLAYER_HPP

@@ -14,12 +14,13 @@ class QuizSettingGroupModel : public QStandardItemModel {
     LastRole,
   };
 
-  explicit QuizSettingModel(QObject* parent = nullptr);
+  explicit QuizSettingGroupModel(QObject* parent = nullptr);
 
   void setRange(Range const*);
 
   QList<RangeInfo> excludedSubranges() const;
-  QList<QuizSetting*> settings() const;
+  QString groupText(QModelIndex const&) const;
+  QList<QVariant> settings(QModelIndex const&) const;
 
   QVariant data(QModelIndex const& idx, int role) const override;
   QHash<int, QByteArray> roleNames() const override;

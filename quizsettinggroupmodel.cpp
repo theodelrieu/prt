@@ -27,9 +27,9 @@ QVariant QuizSettingGroupModel::data(QModelIndex const &idx, int role) const {
   if (role < NameRole || role >= LastRole) return {};
   switch (role) {
     case NameRole:
-      return text();
+      return groupText(idx);
     case SettingsRole:
-      return settings();
+      return settings(idx);
     default:
       return {};
   }
@@ -42,13 +42,22 @@ QHash<int, QByteArray> QuizSettingGroupModel::roleNames() const {
   return names;
 }
 
-QList<QuizSetting*> QuizSettingGroupModel::settings() const {
-  QList<QuizSetting*> ret;
-  for (auto i = 0; i < rowCount(); ++i) {
-    auto const item = itemFromIndex(index(i, 1));
-    ret.append(static_cast<QuizSetting*>(item));
+QList<QVariant> QuizSettingGroupModel::settings(QModelIndex const &idx) const {
+  QList<QVariant> ret;
+  auto const group = itemFromIndex(idx);
+  if (!group) return {};
+
+  for (auto i = 1; i < group->columnCount(); ++i) {
+    auto const item = itemFromIndex(index(idx.row(), i));
+    ret.append(QVariant::fromValue(static_cast<QuizSetting *>(item)));
   }
   return ret;
+}
+
+QString QuizSettingGroupModel::groupText(QModelIndex const &idx) const {
+  auto const group = itemFromIndex(idx);
+  if (!group) return {};
+  return itemFromIndex(index(idx.row(), 0))->text();
 }
 
 QList<RangeInfo> QuizSettingGroupModel::excludedSubranges() const {

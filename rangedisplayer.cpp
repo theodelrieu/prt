@@ -4,17 +4,17 @@
 #include "range.hpp"
 
 RangeDisplayer::RangeDisplayer(TreeViewModel* treeView,
-                               QuizSettingModel* setting, QObject* parent)
+                               QuizSettingGroupModel* settings, QObject* parent)
     : QStandardItemModel(parent),
       _treeView(treeView),
       _handInfo(emptyHandInfo()),
-      _quizSetting(setting) {
+      _quizSettings(settings) {
   auto root = invisibleRootItem();
   for (auto const& elem : qAsConst(_handInfo))
     root->appendRow(new HandInfo(elem));
 }
 
-RangeDisplayer::~RangeDisplayer() { delete _quizSetting; }
+RangeDisplayer::~RangeDisplayer() { delete _quizSettings; }
 
 QList<HandInfo> const& RangeDisplayer::handInfo() const { return _handInfo; }
 
@@ -58,12 +58,12 @@ void RangeDisplayer::setRange(QModelIndex const& idx) {
   auto root = invisibleRootItem();
   for (auto const& elem : qAsConst(_handInfo))
     root->appendRow(new HandInfo(elem));
-  _quizSetting->setRange(_currentRange);
+  _quizSettings->setRange(_currentRange);
 
   endResetModel();
   emit rangeLoaded(_currentRange->name());
 }
 
-QuizSettingModel const* RangeDisplayer::quizSetting() const {
-  return _quizSetting;
+QuizSettingGroupModel const* RangeDisplayer::quizSettings() const {
+  return _quizSettings;
 }
