@@ -13,14 +13,6 @@ ColumnLayout {
         Layout.fillHeight: true
     }
 
-    // Text {
-    //     text: "Do not quiz hands which are 100% in the range"
-    //     Layout.fillWidth: true
-    //     wrapMode: Text.Wrap
-    //     // TODO move this object + listview in a QuizSettings object later on
-    //     visible: GlobalState.mode === Mode.View
-    // }
-
     ListView {
         visible: GlobalState.mode === Mode.View
         Layout.fillHeight: true
@@ -30,21 +22,23 @@ ColumnLayout {
         delegate: Rectangle {
           height: ListView.view.height
           width: ListView.view.width
-          Text {
-            text: name
-          }
-          Component.onCompleted: console.log(name, settings)
-          Column {
+          ColumnLayout {
+            anchors.fill: parent
+            Text {
+              text: name
+              wrapMode: Text.Wrap
+              Layout.fillWidth: true
+            }
             Repeater {
               model: settings
               delegate: Rectangle {
-              height: 20
-              width: ListView.view.width
+              Layout.preferredHeight: 20
+              Layout.fillWidth: true
                 // FIXME loader for different types of settings
                 CustomCheckBox {
                     anchors { left: parent.left; top: parent.top; bottom: parent.bottom }
                     checked: modelData.value
-                    text: modelData.name
+                    text: modelData.text
                     onCheckedChanged: modelData.value = (checkState === Qt.Checked)
                 }
               }

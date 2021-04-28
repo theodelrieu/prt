@@ -5,9 +5,9 @@
 
 class QuizSetting : public QObject, public QStandardItem {
   Q_OBJECT
-  Q_PROPERTY(QString type READ settingType)
-  Q_PROPERTY(QVariant value READ value WRITE setValue)
-  Q_PROPERTY(QString text READ text)
+  Q_PROPERTY(QString type READ settingType NOTIFY typeChanged)
+  Q_PROPERTY(QVariant value READ value WRITE setValue NOTIFY valueChanged)
+  Q_PROPERTY(QString text READ text NOTIFY textChanged)
  public:
   QuizSetting(QString const& text, QVariant const& payload, QString const& type,
               QVariant const& value, QObject* parent = nullptr);
@@ -17,6 +17,11 @@ class QuizSetting : public QObject, public QStandardItem {
   QVariant const& payload() const;
 
   void setValue(QVariant const& v);
+
+ signals:
+  void typeChanged();
+  void valueChanged();
+  void textChanged();
 
  private:
   QVariant _payload;
