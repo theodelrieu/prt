@@ -23,16 +23,6 @@ void QuizSettingGroupModel::setRange(Range const *range) {
     root->appendRow(group);
   }
 
-  {
-    auto group = new QStandardItem("Another setting group");
-    QList<QStandardItem *> settings;
-    for (auto const &sub : qAsConst(subranges)) {
-      settings.append(new QuizSetting(sub.name(), QVariant::fromValue(sub),
-                                      "checkbox", true));
-    }
-    group->appendRow(settings);
-    root->appendRow(group);
-  }
   endResetModel();
 }
 

@@ -12,7 +12,7 @@ set(CMAKE_MACOSX_BUNDLE ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
+include(${CMAKE_CURRENT_BINARY_DIR}/conan_paths.cmake)
 find_package(Qt6 COMPONENTS Core Quick Concurrent REQUIRED)
 
 set(PROJECT_SOURCES
@@ -32,7 +32,9 @@ set(PROJECT_SOURCES
 
 qt_add_resources(PROJECT_SOURCES qml.qrc)
 
-qt_add_executable(prt
+message(STATUS ${PROJECT_SOURCES})
+
+add_executable(prt WIN32
   ${PROJECT_SOURCES}
 )
 
@@ -47,7 +49,6 @@ target_link_libraries(prt
   Qt6::quickwindow
   Qt6::qtquick2plugin
   Qt6::qtquickcontrols2plugin
-  Qt6::qtquickcontrols2macosstyleplugin
   Qt6::qtquickcontrols2fusionstyleplugin
   Qt6::qtquickcontrols2basicstyleplugin
   Qt6::qtquickcontrols2nativestyleplugin
@@ -56,6 +57,7 @@ target_link_libraries(prt
   Qt6::qtquicktemplates2plugin
   Qt6::qtlabsplatformplugin
   Qt6::qtquickcontrols2fusionstyleimplplugin
+  Qt6::qtquickcontrols2windowsstyleplugin
   Qt6::qmlplugin
   Qt6::modelsplugin
   Qt6::workerscriptplugin

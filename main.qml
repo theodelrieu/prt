@@ -11,7 +11,7 @@ Window {
     minimumHeight: 600
     width: 1000
     height: 600
-    title: "Poker range trainer"
+    title: "Preflop range trainer"
 
     Component {
         id: gridScreen

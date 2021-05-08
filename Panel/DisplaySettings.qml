@@ -49,19 +49,19 @@ ColumnLayout {
     }
 
     CustomRadioButton {
+        text: "Subranges"
         checked: true
-        text: "Base range"
         ButtonGroup.group: rangeKindButtonGroup
         onCheckedChanged: {
             if (checked)
-                GlobalState.rangeType = RangeType.Base
-            else
                 GlobalState.rangeType = RangeType.Subranges
+            else
+                GlobalState.rangeType = RangeType.Base
         }
     }
 
     CustomRadioButton {
-        text: "Subranges"
+        text: "Base range"
         ButtonGroup.group: rangeKindButtonGroup
     }
 }
