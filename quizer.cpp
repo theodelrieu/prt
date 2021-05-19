@@ -26,14 +26,15 @@ void Quizer::start() {
   auto const settings = _displayer->quizSettings();
   auto handInfo = _displayer->handInfo();
 
-  _quizHands.insert(_quizHands.end(), handInfo.begin(), handInfo.end());
+  std::copy_if(
+      handInfo.begin(), handInfo.end(), std::back_inserter(_quizHands),
+      [&](auto const& hand) { return hand.parentRange().weight() != 0; });
 
   auto const excludedSubranges = settings->excludedSubranges();
   for (auto const& excluded : qAsConst(excludedSubranges)) {
     _quizHands.erase(
         std::remove_if(_quizHands.begin(), _quizHands.end(),
                        [&](auto const& hand) {
-                         if (hand.parentRange().weight() == 0) return true;
                          auto const& subranges = hand.subranges();
                          auto it = std::find_if(
                              subranges.begin(), subranges.end(),
